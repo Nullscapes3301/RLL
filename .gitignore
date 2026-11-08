@@ -1,9 +1,5 @@
 # Temporary files
-/clp.txt
 /src/test.rkll
-/temp.txt
-/src-license.txt
-/tmp.txt
 
 # Git automation
 /gitcommit.bat
