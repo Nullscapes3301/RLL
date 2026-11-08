@@ -61,7 +61,7 @@ elif opcode == "--version":
 elif opcode == "--im":
 
     pkg = argv[2] if len(argv) > 2 else None
-    rll_mods_link = argv[3] if len(argv) > 3 and argv[2] == "-from" else None
+    rll_mods_link = argv[3] if len(argv) > 3 and argv[3] == "-from" else None
 
     if rll_mods_link is None:
         print("Your RLL version does not support module installation from the stdwlib(standart web library).")
