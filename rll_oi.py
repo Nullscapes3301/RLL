@@ -36,7 +36,7 @@ from rll_types import *
 
 class FormatError(Exception):pass
 
-class RllOi:
+class RllOi: # RLL Official Interpreter
     def __init__(
             self,
             prompt="(pass)",
