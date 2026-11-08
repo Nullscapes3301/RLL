@@ -391,6 +391,32 @@ def main(_TungSahur):
     return rll_string(str(_TungSahur))
     """),
 
+"ord": Command(
+    geval=1,
+    aevalcode="""
+def main(_char):
+    return rll_string(
+        str(
+            ord(
+                str(_char)
+            )
+        )
+    )
+    """),
+
+"chr": Command(
+    geval=1,
+    aevalcode="""
+def main(_char):
+    return rll_string(
+        str(
+            chr(
+                int(_char)
+            )
+        )
+    )
+    """),
+
 "num": Command(
     geval=1,
     aevalcode="""
