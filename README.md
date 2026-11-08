@@ -4,7 +4,7 @@
 
 RLL es un lenguaje de programacion de tipo `Lisp` cuyo nombre significa *Rock Like Lisp*, la razon de este nombre es que los parentesis () forman una especie de ovalo, y hay muchas rocas ovaladas; **NADA QUE VER CON LA MUSICA ROCK**.
 
-La extension de archivos oficial de RLL es `\*.rkll`
+La extension de archivos oficial de RLL es `*.rkll`
 
 ## Caracterisicas
 
