@@ -61,10 +61,10 @@ elif opcode == "--version":
 elif opcode == "--im":
 
     pkg = argv[2] if len(argv) > 2 else None
-    rll_mods_link = argv[3] if len(argv) > 3 and argv[3] == "-from" else None
+    rll_mods_link = argv[4] if len(argv) > 4 and argv[3] == "-from" else None
 
     if rll_mods_link is None:
-        print("Your RLL version does not support module installation from the stdwlib(standart web library).")
+        print("Your RLL version does not support module installation from the stdwlib (standard web library).")
         sys.exit(1)
 
     elif pkg is None:
@@ -76,14 +76,21 @@ elif opcode == "--im":
 
         try:
             sp = vars["stdlib_path"]
-            pkg_link = f"{rll_mods_link}/pkgs/{pkg}"
+            pkg_link = f"{rll_mods_link.rstrip('/')}/pkgs/{pkg}"
 
             # Obtener la lista de archivos del paquete
-            dependencias = wget(f"{pkg_link}/files.json")
-            dependencias = json.loads(dependencias)
+            try:
+                dependencias = wget(f"{pkg_link}/files.json")
+                dependencias = json.loads(dependencias)
 
-            if not isinstance(dependencias, list):
-                raise ValueError("Invalid files.json format")
+                if not isinstance(dependencias, list):
+                    raise ValueError("Invalid files.json format")
+
+            except urllib.error.HTTPError as err:
+                if err.code == 404:
+                    dependencias = [f"{pkg}.rkll"]
+                else:
+                    raise
 
             print("Installing package...")
 
@@ -93,9 +100,18 @@ elif opcode == "--im":
 
             # Descargar e instalar los archivos
             for d in dependencias:
+
+                if not isinstance(d, str):
+                    raise ValueError(f"Invalid filename: {d!r}")
+
+                file_path = os.path.abspath(os.path.join(pkg_path, d))
+
+                # Evitar rutas fuera del directorio del paquete
+                if os.path.commonpath([os.path.abspath(pkg_path), file_path]) != os.path.abspath(pkg_path):
+                    raise ValueError(f"Invalid package path: {d}")
+
                 content = wget(f"{pkg_link}/{d}")
 
-                file_path = os.path.join(pkg_path, d)
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
                 with open(file_path, "wb") as file:
