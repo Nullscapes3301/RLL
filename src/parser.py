@@ -24,7 +24,7 @@ SOFTWARE.
 """
 
 
-from src.rll_types import rll_number, rll_string
+from rll_types import rll_number, rll_string
 
 
 def parser(tokens):

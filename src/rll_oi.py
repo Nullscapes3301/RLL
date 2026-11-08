@@ -28,11 +28,11 @@ import sys
 import copy
 import os
 
-import src.rll_vars as rll_vars
-from src.lexer import lexer
-from src.parser import parser
-from src.rll_commands import commands,__set__,__unset__
-from src.rll_types import *
+import rll_vars as rll_vars
+from lexer import lexer
+from parser import parser
+from rll_commands import commands,__set__,__unset__
+from rll_types import *
 
 class FormatError(Exception):pass
 

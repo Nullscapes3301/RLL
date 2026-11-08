@@ -27,7 +27,7 @@ SOFTWARE.
 global _vm
 _vm = None
 
-from src.rll_types import *
+from rll_types import *
 
 def __set__(vm):
     global _vm
@@ -431,7 +431,7 @@ def main(_Code):
     geval=1,
     aevalcode="""
 def main(_ModuleName):
-    _vm.rll_include(_vm.stdlib_path + str(_ModuleName) + ".rkll")
+    _vm.rll_include(_vm.stdlib_path + "\\\\" + str(_ModuleName) + ".rkll")
     """),
 
 "include": Command(

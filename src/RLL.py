@@ -24,17 +24,17 @@ SOFTWARE.
 """
 
 
-from src.rll_oi import RllOi
+from rll_oi import RllOi
 from sys import argv
 import sys
-from src.rll_vars import vars
+from rll_vars import vars
 import os
 import urllib
 import urllib.error
 import urllib.request
 import json
 
-import src.rll_vars as rll_vars
+import rll_vars as rll_vars
 
 opcode = argv[1] if len(argv) > 1 else None
 
