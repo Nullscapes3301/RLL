@@ -47,14 +47,23 @@ if (opcode is None) or (opcode == "--help"):
 usage: rll [ option | file ] [ args ] ...
 Options:
 --help
-    Show this message.
+    Show this message
 --version
-    Show RLL version.
---im
+    Show RLL version
+--sm
+    Show installed modules
+--im <module> [-from <link>]
     Install a module.
-    rll --im <module name> [ (none) | -from <link>]\
+    -from <link> specifies a custom module source.\
 """)
 
+elif opcode == "--sm":
+    for i in os.listdir(str(vars["stdlib_path"])):
+        m = i
+        if i.endswith(".rkll"):
+            m = i[:-5]
+        print(m)
+    
 elif opcode == "--version":
     print(f"RLL {vars['__version__']}")
 
