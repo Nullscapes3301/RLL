@@ -30,13 +30,19 @@ import platform
 import sys
 import os
 
+a = []
+
+a = [rll_string(i) for i in sys.argv]
+
 vars = {
 "__system__": rll_string(os.name),
 "__platform__": rll_string(platform.platform()),
 "__name__": rll_string("RLL"),
-"__version__": rll_string("Alpha 1"),
-"__argv__": rll_array(sys.argv),
+"__version__": rll_string("1.0.1"),
+"__argv__": rll_array(a),
 "__author__": rll_string("Nullscapes"),
 "__imod__": rll_number(0),
-"stdlib_path": rll_string(r"C:/Users/conta/OneDrive/Codes/RLL/Lib/"),
+"stdlib_path": rll_string(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "Lib")
+),
 }
