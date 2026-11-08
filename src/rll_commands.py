@@ -27,7 +27,7 @@ SOFTWARE.
 global _vm
 _vm = None
 
-from rll_types import *
+from src.rll_types import *
 
 def __set__(vm):
     global _vm

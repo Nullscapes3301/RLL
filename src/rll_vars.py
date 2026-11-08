@@ -24,7 +24,7 @@ SOFTWARE.
 """
 
 
-from rll_types import *
+from src.rll_types import *
 
 import platform
 import sys
