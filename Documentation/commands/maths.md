@@ -1,0 +1,18 @@
+# Funciones matematicas
+
+En esta seccion hay muchas funciones que se puede deducir y que **NO** voy a documentar, incluye las funciones:
+
+* \+
+* \-
+* \*
+* /
+* %
+* and
+* xor
+* or
+* ¬
+* \**
+
+## ¬
+
+Representa el `not`

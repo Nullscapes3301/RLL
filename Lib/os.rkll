@@ -1,0 +1,41 @@
+(func "system" (list "Message") (__ioos.os_call Message ) )
+
+(macro "errexit" (exit 1) )
+
+(func "mkdir" (list "DirName")
+{
+    (if
+        (| (== __system__ "nt") (== __system__ "posix") )
+        (__ioos.os_call (join " " "mkdir" DirName) )
+        (raise "Unsupported OS")
+    )
+})
+
+(func "remove" (list "file")
+
+{
+    (if (== __system__ "nt")
+        (__ioos.os_call (join " " "del" file ) )
+        (__ioos.os_call (join " " "rm" file) )
+    )
+})
+
+(macro "get_cwd" {
+    (if (== __system__ "nt")
+        (__ioos.os_call "chdir > temp")
+        (__ioos.os_call "pwd > temp")
+    )
+    (return (open "temp" "r") )
+    (remove "temp")
+})
+
+(macro "sep" (if (== __system__ "nt") "\" "/" ) )
+
+(func "chdir" (list "DirName")
+{
+  (if
+        (| (== __system__ "nt") (== __system__ "posix") )
+        (__ioos.os_call (join " " "cd" DirName) )
+        (raise "Unsupported OS")
+  )
+})

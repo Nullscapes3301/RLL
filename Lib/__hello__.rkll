@@ -1,0 +1,6 @@
+(macro "__hello__"
+{
+    (print "Hello, world!")
+})
+
+(if (¬ __imod__) (__hello__) (pass) )

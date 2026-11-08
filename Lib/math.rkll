@@ -1,0 +1,44 @@
+(func "sqrt" (list "_N")
+{
+    (set "a" _N)
+    (while (> a 0)
+    (set "b" 0)
+    {
+        (set "b" (/ (+ a (/ _N a)) 2))
+        (if (>= "b" a)
+            (set b 1)
+            (set "a" b)
+        )
+        (return b)
+        (break b)
+    })
+    (return a)
+})
+
+(import "range")
+
+(func "!" (list "n")
+{
+    (set "actual" n)
+    (set "fact" 1)
+    (if (< n 0) (raise "Factorial cannot work with negative numbers") (pass) )
+    (while (& (!= actual 1) (!= n 0) )
+    {
+        (set "fact" (* actual fact) )
+        (set "actual" (- actual 1) )
+    })
+    (return fact)
+})
+
+(func "pow" (list "x" "y") (** x y) )
+
+(func "abs" (list "_n") {
+    (if (< _n 0) (set "_n" (* _n -1)) (pass) )
+    (return _n)
+} )
+
+(func "min" (list "_x" "_y") (if (< _x _y) _x _y ) )
+
+(func "max" (list "_x" "_y") (if (> _x _y) _x _y ) )
+
+(func "sign" (list "_n") (if (< _n 0) -1 (if (== _n 0) 0 1) ) )

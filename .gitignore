@@ -1,0 +1,12 @@
+# Temporary files
+/clp.txt
+/test.rkll
+/temp.txt
+
+# Git automation
+/gitcommit.bat
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

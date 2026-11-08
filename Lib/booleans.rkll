@@ -1,0 +1,5 @@
+(import "lists")
+(set "True" 1)
+(set "False" 0)
+(func "isbool" (list "_Value") (inside _Value (list True False) ) )
+(func "bool" (list "_Value") (inside _Value (list True False "True" "False" "0" "1" ) ) )

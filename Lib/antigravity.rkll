@@ -1,0 +1,2 @@
+(import "chromeopen")
+(chrome.open "https://xkcd.com/353/")

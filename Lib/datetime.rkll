@@ -1,0 +1,10 @@
+(macro "date"
+{
+    (set "time" 0)
+    (if (== __system__ "nt")
+        (__ioos.os_call "date /t > temp")
+        (__ioos.os_call "date +%F > temp")
+    )
+    (set "time" (open "temp" "r") )
+    (return (num time ) )
+})

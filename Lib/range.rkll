@@ -1,0 +1,34 @@
+(func "range" (list "len")
+{
+    (set "ret" (list))
+    (set "tmp" 1)
+
+    (if (>= 0 len) (raise "Invalid range") (pass))
+
+    (while (<= tmp len)
+    {
+        (append tmp ret)
+        (set "tmp" (+ tmp 1))
+    })
+
+    (return ret)
+})
+
+(func "srange" (list "start" "end")
+{
+    (set "ret" (list))
+    (set "tmp" start)
+
+    (if (>= 0 start) (raise "Invalid range") (pass))
+    (if (>= start end) (raise "Invalid range") (pass))
+
+    (while (< tmp end)
+    {
+        (append tmp ret)
+        (set "tmp" (+ tmp 1))
+    })
+    
+    (append end ret)
+
+    (return ret)
+})

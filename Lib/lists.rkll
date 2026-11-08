@@ -1,0 +1,47 @@
+(func "inside" (list "_Value" "_List" )
+{
+    (set "tmp" 0)
+    (for "i" _List
+        (if (== i _Value)
+            (set "tmp" 1)
+            (pass)
+        )
+    )
+    (return tmp)
+}
+)
+
+(import "range")
+
+(func "where" (list "_what" "_list")
+{
+    (set "ret" 1)
+    (set "r" 0)
+    (for "elem" (range (len _list) )
+    {
+        (set "ret" elem)
+        (if (== (getelem elem _list ) _what )
+            {
+                (set "r" 1)
+            }
+            (pass)
+        )
+        (break r 1)
+    })
+    (return ret)
+})
+
+(func "unique" (list "_list ")
+{
+    (set "ret" (list) )
+    (set "elems")
+    (for "elem" _list
+    {
+        (if 
+            (inside elem elems)
+            (pass)
+            (append elem ret)
+        )
+    })
+    (return ret)
+})

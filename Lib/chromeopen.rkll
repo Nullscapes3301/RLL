@@ -1,0 +1,14 @@
+(import "lists")
+
+(func "chrome.open" (list "web")
+{
+    (if (inside " " web)
+        (raise "A url cannot contain spaces.")
+        (pass)
+    )
+    (return
+        (__ioos.os_call
+            (join " " "start chrome" web ">nul 2>&1" )
+        )
+    )
+})
