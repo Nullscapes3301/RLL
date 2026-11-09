@@ -16,49 +16,14 @@ No todas las funciones ejecutan automaticamente todos los argumentos, por ejempl
 
 ## Tipos de datos
 
-RLL solo acepta tres tipos de datos:
+RLL solo acepta cuatro tipos de datos:
 
 * String
 * Number
 * Array
+* Dict
 
-Nada mas.
-
-### String
-
-String representa una coleccion de caracteres imprimibles o no imprimibles.
-Los strings se crean usando las "".
-
-### Number
-
-Number es un numero entero con signo, puede tener un maximo de 4300 digitos. **NO ACEPTA DECIMALES**.
-Se hacen poniendo los numeros sin comillas o algo asi.
-
-### Array
-
-Array es deducible por el nombre, es un arreglo con datos ordenados que pueden ser cualquier tipo de datos de Lispl, puede contener mas arreglos adentro, **Son base 1**
-Se crean con el comando list dandole los elementos de la lista como argumentos:
-
-```rll
-(list 1 2 3 "Hola" "Mundo" (list "Lol otra lista") )
-```
-
-### ¿Booleanos?
-
-Para comandos como if no se usan valores booleanos como en Python, ni con `NIL` como en Lisp, en cambio se usan tres excepciones para falso y todo lo que no sea falso para verdadero:
-
-* (list)
-La lista vacia representa falso
-* ""
-El string vacio representa falso
-* 0
-El numero 0 representa falso
-
-Si no es ninguno de esos tres, el valor se considera verdadero
-
-### mas
-
-Para mas detalles sobre los tipos consulte /Documentation/types/
+Para los detalles sobre los tipos consulte /Documentation/types/
 
 ## Arreglos de comandos
 

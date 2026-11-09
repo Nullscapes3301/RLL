@@ -33,6 +33,10 @@ Para acceder a un elemento esta la opcion `getelem` que recibe un indice y una l
 
 no devolvera 20, devolvera 10.
 
+## Modificar un array
+
+Se usa el comando `setelem` que es igual que getelem solo que recibe un tercer argumento como el nuevo valor
+
 ## Añadir elemtos
 
 Para añadir un elemento a un array en RLL se usa el comando `append` que simplemente añade un elemento al final de la lista

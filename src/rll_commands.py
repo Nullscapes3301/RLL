@@ -70,6 +70,7 @@ class Command(BaseRllObj):
                 "rll_number": rll_number,
                 "rll_string": rll_string,
                 "rll_array": rll_array,
+                "rll_dict": rll_dict,
                 "RllType": RllType,
                 "RllErrorMsg": RllErrorMsg,
                 }
@@ -327,9 +328,22 @@ def main(_a1, _b2):
     geval=-1,
     aevalcode="""
 def main(_IndexNum, _List):
-    if not isinstance(_List, rll_array):
-        raise TypeError("getelem only works with arrays")
-    return _List[int(_IndexNum)]
+    if not isinstance(_List, (rll_array, rll_dict) ):
+        raise TypeError("getelem only works with arrays and dicts")
+    if isinstance(_IndexNum, int):
+        tralalero = int(_IndexNum)
+    else:
+        tralalero = _IndexNum
+    return _List[tralalero]
+    """),
+
+"setelem": Command(
+    geval=-1,
+    aevalcode="""
+def main(_IndexNum, _List, _Val):
+    if not isinstance(_List, (rll_array, rll_dict)):
+        raise TypeError("setelem only works with arrays and dicts")
+    _List[_IndexNum] = _Val
     """),
 
 "append": Command(
@@ -414,6 +428,20 @@ def main(_char):
                 int(_char)
             )
         )
+    )
+    """),
+
+"dict": Command(
+    geval=0,
+    aevalcode="""
+def main(*ast):
+    d = {}
+    for a in ast:
+        key = _vm.rll_eval(a[0])
+        value = _vm.rll_eval(a[1])
+        d[str(key)] = value
+    return rll_dict(
+        d
     )
     """),
 

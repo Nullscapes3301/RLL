@@ -33,11 +33,12 @@ class RllType(BaseRllObj):
         self.__types__ = [
             str,
             int,
-            list
+            list,
+            dict
         ]   
 
         if type(rdata) not in self.__types__:
-            raise ValueError(f"Invalid data type included at a RllType, excepced {str} or {list} or {int}, {type(rdata)} founded")
+            raise ValueError(f"Invalid data type included at a RllType, expected {str} or {list} or {int} or {dict}, {type(rdata)} founded")
 
         self.__data__ = rdata
 
@@ -68,10 +69,24 @@ class RllType(BaseRllObj):
             return True
     
     def __getitem__(self, index):
-        if index > 0:
-            return self.__data__[index-1]
+        if isinstance(self.__data__, dict):
+            return self.__data__[str(index)]
         else:
-            raise IndexError("Negative index aren't admitted")
+            if index > 0:
+                return self.__data__[index-1]
+            else:
+                raise IndexError("Negative index aren't admitted")
+
+    def __setitem__(self, key, value):
+        if isinstance(self.__data__, dict):
+            k =str(key)
+        else:
+            key = int(key)
+            if key > 0:
+                k = int(key)-1
+            else:
+                raise IndexError("Negative index aren't admitted")
+        self.__data__[k] = value
 
     def __iter__(self):
         return iter(self.__data__)
@@ -98,4 +113,5 @@ class rll_array(RllType):
     def __repr__(self):
         return f"array({','.join(map(str, self.__data__))})"
 class rll_string(RllType):pass
-class rll_number(RllType):pass  
+class rll_number(RllType):pass
+class rll_dict(RllType):pass
