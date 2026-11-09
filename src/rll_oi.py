@@ -27,7 +27,6 @@ SOFTWARE.
 import sys
 import copy
 import os
-
 import rll_vars as rll_vars
 from lexer import lexer
 from parser import parser
