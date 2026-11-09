@@ -269,7 +269,8 @@ def main(_o):
     d =  {
             rll_string: "string",
             rll_number: "number",
-            rll_array: "array"
+            rll_array: "array",
+            rll_dict: "dict"
         }
     return rll_string(
         d[type(_o)]

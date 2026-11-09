@@ -103,14 +103,22 @@ At block:
 
         _ModuleName = str(_ModuleName)
 
+        mod = os.path.basename(_ModuleName)[:-5]
+
+        if mod.lower() in ["io", "iostream"]:
+            raise ModuleNotFoundError(f"\"{mod}\" isn't acceptable in RLL module name standars")
+
         if _ModuleName in self.imports:
             return
 
         if os.path.isdir(_ModuleName):
             _ModuleName = os.path.join(_ModuleName, "__init__.rkll")
 
-        with open(_ModuleName, encoding="utf-8") as file:
-            rll_code = file.read()
+        try:
+            with open(_ModuleName, encoding="utf-8") as file:
+                rll_code = file.read()
+        except FileNotFoundError:
+            raise ModuleNotFoundError(f"No module named '{_ModuleName}'")
 
         self.imports.append(_ModuleName)
 
