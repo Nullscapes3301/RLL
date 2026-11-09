@@ -1,5 +1,6 @@
 # Temporary files
 /src/test.rkll
+/tempCodeRunnerFile.bat
 
 # Git automation
 /gitcommit.bat
