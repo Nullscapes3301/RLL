@@ -23,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from decimal import Decimal
+
 class BaseRllObj:pass
 
 class RllErrorMsg(Exception):pass
@@ -34,7 +36,8 @@ class RllType(BaseRllObj):
             str,
             int,
             list,
-            dict
+            dict,
+            Decimal
         ]   
 
         if type(rdata) not in self.__types__:
@@ -53,9 +56,6 @@ class RllType(BaseRllObj):
 
     def __len__(self):
         return len(self.__data__)
-
-    def __list__(self):
-        return list(self.__data__)
 
     def __bool__(self):
         dat = self.__data__
@@ -91,6 +91,7 @@ class RllType(BaseRllObj):
     def __iter__(self):
         return iter(self.__data__)
 
+
     def __eq__(self, unself):
         return self.__data__ == unself
 
@@ -109,9 +110,32 @@ class RllType(BaseRllObj):
     def __ge__(self, unself):
         return self.__data__ >= unself
 
+
+    def __add__(self, unself):
+        return self.__data__ + unself.__data__
+
+    def __sub__(self, unself):
+            return self.__data__ - unself.__data__
+
+    def __mul__(self, unself):
+            return self.__data__ * unself.__data__
+
+    def __twomul__(self, unself):
+        return self.__data__ ** unself.__data__
+
+    def __truediv__(self, unself):
+            return Decimal(self.__data__ / unself.__data__)
+
+    def __floordiv__(self, unself):
+            return int(self.__data__ // unself.__data__)
+
+    def __mod__(self, unself):
+            return self.__data__ / unself.__data__
+
 class rll_array(RllType):
     def __repr__(self):
         return f"array({','.join(map(str, self.__data__))})"
 class rll_string(RllType):pass
 class rll_number(RllType):pass
 class rll_dict(RllType):pass
+class rll_decimal(RllType):pass

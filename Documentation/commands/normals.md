@@ -18,7 +18,7 @@ salida:
 
 ## type
 
-recibe un unico aargumento de cualquier tipo y retorna un string con el nombre, por ejemplo:
+recibe un unico argumento de cualquier tipo y retorna un string con el nombre, por ejemplo:
 
 ```rll
 (print (type 123 ) )
@@ -33,3 +33,5 @@ number
 string
 array
 ```
+
+(acepta todos los tipos de datos no solo esos)

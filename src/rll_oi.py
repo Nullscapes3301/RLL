@@ -33,6 +33,8 @@ from parser import parser
 from rll_commands import commands,__set__,__unset__
 from rll_types import *
 
+__all__ = ["RllOi"]
+
 class FormatError(Exception):pass
 
 class RllOi: # RLL Official Interpreter
@@ -80,6 +82,10 @@ class RllOi: # RLL Official Interpreter
             exit_code = 2
         except BaseException as err:
             msg = type(err).__name__
+            try:
+                esg = a[0] + "" if len(a) == 1 else " ..."
+            except IndexError:
+                esg = "Could not read block of the error"
             if isinstance(err, RllErrorMsg):
                 msg = "Raised Error"
             print(f"""\
@@ -90,7 +96,7 @@ Error message:
     {err}
 
 At block:
-    ({a[0]}{"" if len(a) == 1 else " ..."})
+    ({esg})
 """)
             exit_code =  1
         finally:

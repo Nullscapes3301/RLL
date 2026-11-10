@@ -71,6 +71,7 @@ class Command(BaseRllObj):
                 "rll_string": rll_string,
                 "rll_array": rll_array,
                 "rll_dict": rll_dict,
+                "rll_decimal": rll_decimal,
                 "RllType": RllType,
                 "RllErrorMsg": RllErrorMsg,
                 }
@@ -183,56 +184,63 @@ def main(_FuncName, _FuncVars, _FuncCode):
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) + int(_Num2))
+    return rll_number(_Num1 + _Num2)
     """),
 
 "-": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) - int(_Num2))
+    return rll_number(_Num1 - _Num2)
     """),
 
 "*": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) * int(_Num2))
+    return rll_number(_Num1 * _Num2)
     """),
 
 "/": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) // int(_Num2))
+    return rll_number(_Num1 / _Num2)
+    """),
+
+"//": Command(
+    geval=-1,
+    aevalcode="""
+def main(_Num1, _Num2):
+    return rll_number(_Num1 // _Num2)
     """),
 
 "%": Command(
     geval=-1,
     aevalcode=r"""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) % int(_Num2))
+    return rll_number(_Num1 % _Num2)
     """),
 
 "&": Command(
     geval=-1,
     aevalcode="""1
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) and int(_Num2))
+    return rll_number(bool(_Num1) and bool(_Num2))
     """),
 
 "^": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int( not int(_Num1) == int(_Num2) ) )
+    return rll_number(int( not bool(_Num1) == bool(_Num2) ) )
     """),
 
 "|": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) or int(_Num2))
+    return rll_number(bool(_Num1) or bool(_Num2))
     """),
 
 "¬": Command(
@@ -270,7 +278,8 @@ def main(_o):
             rll_string: "string",
             rll_number: "number",
             rll_array: "array",
-            rll_dict: "dict"
+            rll_dict: "dict",
+            rll_decimal: "decimal"
         }
     return rll_string(
         d[type(_o)]

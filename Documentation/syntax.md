@@ -16,12 +16,13 @@ No todas las funciones ejecutan automaticamente todos los argumentos, por ejempl
 
 ## Tipos de datos
 
-RLL solo acepta cuatro tipos de datos:
+RLL solo acepta cinco tipos de datos:
 
 * String
 * Number
 * Array
 * Dict
+* Decimal
 
 Para los detalles sobre los tipos consulte /Documentation/types/
 

@@ -24,7 +24,7 @@ SOFTWARE.
 """
 
 
-from rll_types import rll_number, rll_string
+from rll_types import *
 
 
 def parser(tokens):
@@ -45,6 +45,9 @@ def parser(tokens):
         if typ == "string":
             return rll_string(value)
 
+        if typ == "float":
+            return rll_decimal(value)
+
         if typ == "text":
             return value
 
@@ -54,13 +57,21 @@ def parser(tokens):
         if value == ")":
             raise SyntaxError("Unexpected close: ')'")
 
+        if value == "]":
+            raise SyntaxError("Unexpected close: ']'")
+
         if value == "}":
             raise SyntaxError("Unexpected close: '}'")
 
-        if value not in ("(", "{"):
+        if value not in ("(", "{", "["):
             raise SyntaxError(f"Unexpected character: {value!r}")
 
-        end = ")" if value == "(" else "}"
+        if value == "(":
+            end = ")"
+        elif value == "[":
+            end = "]"
+        else:
+            end = "}"
         items = []
 
         while pos < len(tokens):
@@ -80,6 +91,9 @@ def parser(tokens):
 
         if value == "{":
             return ["progn", *items]
+
+        elif value == "[":
+            return ["list", *items]
 
         if not items:
             raise SyntaxError("Empty call")
