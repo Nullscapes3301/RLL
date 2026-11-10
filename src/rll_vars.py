@@ -32,7 +32,7 @@ import os
 
 a = []
 
-a = [rll_string(i) for i in sys.argv]
+a = [rll_string(i) for i in sys.argv[1:]]
 
 vars = {
 "__system__": rll_string(os.name),

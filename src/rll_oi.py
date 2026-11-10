@@ -87,7 +87,7 @@ class RllOi: # RLL Official Interpreter
             except IndexError:
                 esg = "Could not read block of the error"
             if isinstance(err, RllErrorMsg):
-                msg = "Raised Error"
+                msg = "Raised error"
             print(f"""\
 Fatal Error:
     {msg}

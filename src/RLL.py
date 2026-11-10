@@ -123,7 +123,7 @@ elif opcode == "--im":
 
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
-                with open(file_path, "wb") as file:
+                with open(file_path, "wb", encoding="utf-8") as file:
                     file.write(content)
 
             print(f'Module "{pkg}" installed successfully')
@@ -146,7 +146,7 @@ elif opcode == "--im":
 else:
     if os.path.exists(opcode):
         RllOi(
-            open(opcode, "r").read(),
+            open(opcode, "r", encoding="utf-8").read(),
         )()
     else:
         print(f"File \"{opcode}\" not found")

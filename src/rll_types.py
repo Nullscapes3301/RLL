@@ -34,7 +34,6 @@ class RllType(BaseRllObj):
     
         self.__types__ = [
             str,
-            int,
             list,
             dict,
             Decimal
@@ -136,6 +135,7 @@ class rll_array(RllType):
     def __repr__(self):
         return f"array({','.join(map(str, self.__data__))})"
 class rll_string(RllType):pass
-class rll_number(RllType):pass
+class rll_number(RllType):
+    def __init__(self, rdata):
+        super().__init__(Decimal(rdata))
 class rll_dict(RllType):pass
-class rll_decimal(RllType):pass

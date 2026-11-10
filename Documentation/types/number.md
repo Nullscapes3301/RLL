@@ -1,6 +1,6 @@
 # RLL number documentation
 
-Otro tipo basico de RLL es `number` que es el equivalente de *int* de python. No acepta decimales pero si tiene signo.
+Otro tipo basico de RLL es `number` que es el equivalente de *int* o *float* de python. Acepta tanto decimales como enteros, posee signo.
 
 ## Crear un number
 
@@ -29,6 +29,19 @@ A diferencia de los strings y los arrays, los number **no son iterables**, si tr
 * \**
 * ¬
 etc.
+
+## decimales y negativos
+
+Es practicamente lo mismo:
+
+```rll
+(print 123)
+(print -123)
+(print 12.3)
+(print -12.3)
+```
+
+Los decimales si o si se escriben con punto, en caso de poner una coma el lenguaje no lo va a interpretar como un decimal y va a tener un comportamiento indefinido.
 
 ## Mas
 

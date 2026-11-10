@@ -71,8 +71,8 @@ class Command(BaseRllObj):
                 "rll_string": rll_string,
                 "rll_array": rll_array,
                 "rll_dict": rll_dict,
-                "rll_decimal": rll_decimal,
                 "RllType": RllType,
+                "decimal": Decimal,
                 "RllErrorMsg": RllErrorMsg,
                 }
 
@@ -178,88 +178,58 @@ def main(_FuncName, _FuncVars, _FuncCode):
     _vm.locals[str(_FuncName)] = Command(aeval=False, geval=list(_FuncVars), aevalcode=_FuncCode)
     """),
 
-#Operadores matematicos
+
+# Operadores matematicos
 
 "+": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(_Num1 + _Num2)
-    """),
+    return rll_number(_Num1.__data__ + _Num2.__data__)
+"""),
 
 "-": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(_Num1 - _Num2)
-    """),
+    return rll_number(_Num1.__data__ - _Num2.__data__)
+"""),
 
 "*": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(_Num1 * _Num2)
-    """),
+    return rll_number(_Num1.__data__ * _Num2.__data__)
+"""),
 
 "/": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(_Num1 / _Num2)
-    """),
+    return rll_number(_Num1.__data__ / _Num2.__data__)
+"""),
 
 "//": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(_Num1 // _Num2)
-    """),
+    return rll_number(_Num1.__data__ // _Num2.__data__)
+"""),
 
 "%": Command(
     geval=-1,
-    aevalcode=r"""
-def main(_Num1, _Num2):
-    return rll_number(_Num1 % _Num2)
-    """),
-
-"&": Command(
-    geval=-1,
-    aevalcode="""1
-def main(_Num1, _Num2):
-    return rll_number(bool(_Num1) and bool(_Num2))
-    """),
-
-"^": Command(
-    geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int( not bool(_Num1) == bool(_Num2) ) )
-    """),
-
-"|": Command(
-    geval=-1,
-    aevalcode="""
-def main(_Num1, _Num2):
-    return rll_number(bool(_Num1) or bool(_Num2))
-    """),
-
-"¬": Command(
-    geval=-1,
-    aevalcode="""
-def main(_Num1):
-    return rll_number(
-        int(
-            not bool(_Num1)
-        )
-    )
-    """),
+    return rll_number(_Num1.__data__ % _Num2.__data__)
+"""),
 
 "**": Command(
     geval=-1,
     aevalcode="""
 def main(_Num1, _Num2):
-    return rll_number(int(_Num1) ** int(_Num2))
-    """),
+    return rll_number(_Num1.__data__ ** _Num2.__data__)
+"""),
+
 
 # Funciones
 
@@ -279,7 +249,6 @@ def main(_o):
             rll_number: "number",
             rll_array: "array",
             rll_dict: "dict",
-            rll_decimal: "decimal"
         }
     return rll_string(
         d[type(_o)]

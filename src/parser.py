@@ -25,7 +25,7 @@ SOFTWARE.
 
 
 from rll_types import *
-
+from decimal import Decimal
 
 def parser(tokens):
     pos = 0
@@ -39,14 +39,11 @@ def parser(tokens):
         typ, value = tokens[pos]
         pos += 1
 
-        if typ == "num":
-            return rll_number(int(value))
-
         if typ == "string":
             return rll_string(value)
 
-        if typ == "float":
-            return rll_decimal(value)
+        if typ in ["float", "num"]:
+            return rll_number(Decimal(value))
 
         if typ == "text":
             return value

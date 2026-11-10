@@ -24,9 +24,11 @@ SOFTWARE.
 """
 
 
+
 import re
+
 def lexer(source):
-    pattern = r'"(?:\\.|[^"\\])*"|-?\d+|[(){}\[\]]|[^\s(){}"]+'
+    pattern = r'"(?:\\.|[^"\\])*"|-?\d+(?:\.\d+)?|[(){}\[\]]|[^\s(){}\[\]"]+'
     tokens = []
     for value in re.findall(pattern, source):
         if value in ("(", ")", "{", "}", "[", "]"):
@@ -35,7 +37,7 @@ def lexer(source):
             tokens.append(("string", value[1:-1]))
         elif re.fullmatch(r'-?\d+', value):
             tokens.append(("num", value))
-        elif re.fullmatch(r"-?\d+(\.\d+)?", value):
+        elif re.fullmatch(r'-?\d+\.\d+', value):
             tokens.append(("float", value))
         else:
             tokens.append(("text", value))
