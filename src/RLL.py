@@ -42,7 +42,7 @@ def wget(url):
     with urllib.request.urlopen(url) as response:
         return response.read()
 
-if (opcode == "--help"):
+if (opcode == "--help") or opcode is None:
     print("""\
 usage: rll [ option | file ] [ args ] ...
 Options:
@@ -145,7 +145,7 @@ elif opcode == "--im":
             print(f"Something happened while installing the module: {err!r}")
             sys.exit(1)
 
-elif opcode == "--repl" or opcode is None:
+elif opcode == "--repl":
     from rll_types import *
     oi = RllOi()
     oi.globals["__argv__"] = rll_array([])
@@ -156,7 +156,7 @@ elif opcode == "--repl" or opcode is None:
         except EOFError:
             break
         except KeyboardInterrupt:
-            break
+            print("\nKeyboardInterrupt")
 
 else:
     if os.path.exists(opcode):
@@ -164,5 +164,5 @@ else:
             open(opcode, "r", encoding="utf-8").read(),
         )()
     else:
-        print(f"File \"{opcode}\" not found")
+        print(f"\"{opcode}\" not a valid option or not found file")
         sys.exit(1)

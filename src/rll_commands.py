@@ -425,7 +425,7 @@ def main(_char):
     return rll_string(
         str(
             ord(
-                _char.__data__
+                str(_char.__data__)
             )
         )
     )
@@ -438,7 +438,7 @@ def main(_char):
     return rll_string(
         str(
             chr(
-                _char.__data__
+                int(_char.__data__)
             )
         )
     )
