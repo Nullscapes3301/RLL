@@ -132,7 +132,6 @@ Error message:
 
         try:
             for p in code:
-                print("EXECUTING:", repr(p))
                 self.rll_eval(p)
         finally:
             self.globals["__imod__"] = rll_number( int(self.globals["__imod__"]) - 1 )

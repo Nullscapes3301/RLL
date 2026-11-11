@@ -41,4 +41,4 @@ hombre
 
 ## Modificar
 
-Para modificar alguna llave de un dict se usa el comando `setelem`
+Para modificar alguna de un dict se usa el comando `setelem`
