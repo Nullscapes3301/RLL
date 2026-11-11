@@ -7,9 +7,9 @@ En esta seccion hay muchas funciones que se puede deducir y que **NO** voy a doc
 * \*
 * /
 * %
-* and
-* xor
-* or
+* &
+* ^
+* |
 * ¬
 * \**
 

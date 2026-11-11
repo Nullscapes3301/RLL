@@ -1,0 +1,22 @@
+(func "get_points" ["a" "b"]
+{
+    (set "p" [0 0] )
+
+    (if (& a b)
+        (set "p" [3 3])
+        (pass)
+    )
+    (if (& (¬ a) b)
+        (set "p" [0 5])
+        (pass)
+    )
+    (if (& a (¬ b) )
+        (set "p" [5 0])
+        (pass)
+    )
+    (if (& (¬ a) (¬ b) )
+        (set "p" [1 1])
+        (raise "Invalid options")
+    )
+    (return p)
+})

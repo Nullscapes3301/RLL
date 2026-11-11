@@ -230,6 +230,40 @@ def main(_Num1, _Num2):
     return rll_number(_Num1.__data__ ** _Num2.__data__)
 """),
 
+"&": Command(
+    geval=-1,
+    aevalcode="""
+def main(_a, _b):
+    a = bool(_a)
+    b = bool(_b)
+    return rll_number(a and b)
+"""),
+
+"^": Command(
+    geval=-1,
+    aevalcode="""
+def main(_a, _b):
+    a = bool(_a)
+    b = bool(_b)
+    return rll_number((a or b) and not (a and b))
+"""),
+
+"|": Command(
+    geval=-1,
+    aevalcode="""
+def main(_a, _b):
+    a = bool(_a)
+    b = bool(_b)
+    return rll_number(a or b)
+"""),
+
+"¬": Command(
+    geval=-1,
+    aevalcode="""
+def main(_a):
+    a = bool(_a)
+    return rll_number(not a)
+"""),
 
 # Funciones
 
