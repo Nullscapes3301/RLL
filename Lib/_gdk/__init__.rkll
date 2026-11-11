@@ -1,0 +1,1 @@
+(raise "GDK musn't be imported directly")

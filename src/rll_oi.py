@@ -62,30 +62,27 @@ class RllOi: # RLL Official Interpreter
         imports son los modulos importados para evitar abrir uno dos veces
         """
 
-        self.stdlib_path = str(rll_vars.vars["stdlib_path"])
+        self.stdlib_path = str(self.globals["stdlib_path"])
 
         self.parser = parser
         self.lexer = lexer
 
     def __call__(self):
-        self.l = self.lexer(self.prompt)
-        self.code = self.parser(self.l)
-
         exit_code = 0
 
         __set__(self)
 
         try:
+            self.l = self.lexer(self.prompt)
+            self.code = self.parser(self.l)
             for a in self.code:
                 self.rll_eval(a)
         except KeyboardInterrupt:
             exit_code = 2
+        except SystemExit as e:
+            sys.exit(e)
         except BaseException as err:
             msg = type(err).__name__
-            try:
-                esg = a[0] + "" if len(a) == 1 else " ..."
-            except IndexError:
-                esg = "Could not read block of the error"
             if isinstance(err, RllErrorMsg):
                 msg = "Raised error"
             print(f"""\
@@ -93,10 +90,7 @@ Fatal Error:
     {msg}
 
 Error message:
-    {err}
-
-At block:
-    ({esg})
+    {err}\
 """)
             exit_code =  1
         finally:
@@ -116,14 +110,18 @@ At block:
         if _ModuleName in self.imports:
             return
 
+        _ModuleName = os.path.join(self.stdlib_path, _ModuleName)
+
         if os.path.isdir(_ModuleName):
             _ModuleName = os.path.join(_ModuleName, "__init__.rkll")
+        else:
+            _ModuleName = _ModuleName + ".rkll"
 
         try:
             with open(_ModuleName, encoding="utf-8") as file:
                 rll_code = file.read()
         except FileNotFoundError:
-            raise ModuleNotFoundError(f"No module named '{_ModuleName}'")
+            raise ModuleNotFoundError(f"No module named '{mod}'")
 
         self.imports.append(_ModuleName)
 
@@ -134,6 +132,7 @@ At block:
 
         try:
             for p in code:
+                print("EXECUTING:", repr(p))
                 self.rll_eval(p)
         finally:
             self.globals["__imod__"] = rll_number( int(self.globals["__imod__"]) - 1 )

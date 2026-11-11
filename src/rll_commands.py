@@ -245,7 +245,9 @@ def main(_a, _b):
 def main(_a, _b):
     a = bool(_a)
     b = bool(_b)
-    return rll_number((a or b) and not (a and b))
+    return rll_number(
+        a != b # si, eso es un xor
+    )
 """),
 
 "|": Command(
@@ -261,6 +263,7 @@ def main(_a, _b):
     geval=-1,
     aevalcode="""
 def main(_a):
+    print("NOT RECEIVED:", repr(_a), type(_a))
     a = bool(_a)
     return rll_number(not a)
 """),
@@ -295,14 +298,14 @@ def main(_o):
     geval=-1,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(int(_a1 == _b2))
+    return rll_number(_a1 == _b2)
     """),
 
 "!=": Command(
     geval=2,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(int(_a1 != _b2))
+    return rll_number(_a1 != _b2)
     """),
 
 
@@ -310,14 +313,14 @@ def main(_a1, _b2):
     geval=2,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(int(int(_a1) <= int(_b2)))
+    return rll_number(_a1 <= _b2)
     """),
 
 ">=": Command(
     geval=2,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(int(int(_a1) >= int(_b2)))
+    return rll_number(_a1 >= _b2)
     """),
 
 
@@ -325,14 +328,14 @@ def main(_a1, _b2):
     geval=2,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(int(int(_a1) < int(_b2)))
+    return rll_number(_a1 < _b2
     """),
 
 ">": Command(
     geval=2,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(int(int(_a1) > int(_b2)))
+    return rll_number(_a1 > _b2)
     """),
 
 # Listas
@@ -341,13 +344,9 @@ def main(_a1, _b2):
     geval=-1,
     aevalcode="""
 def main(_IndexNum, _List):
-    if not isinstance(_List, (rll_array, rll_dict) ):
+    if not isinstance(_List, (rll_array, rll_dict)):
         raise TypeError("getelem only works with arrays and dicts")
-    if isinstance(_IndexNum, int):
-        tralalero = int(_IndexNum)
-    else:
-        tralalero = _IndexNum
-    return _List[tralalero]
+    return _List[int(_IndexNum)]
     """),
 
 "setelem": Command(
@@ -356,7 +355,8 @@ def main(_IndexNum, _List):
 def main(_IndexNum, _List, _Val):
     if not isinstance(_List, (rll_array, rll_dict)):
         raise TypeError("setelem only works with arrays and dicts")
-    _List[_IndexNum] = _Val
+
+    _List[int(_IndexNum)] = _Val
     """),
 
 "append": Command(
@@ -425,7 +425,7 @@ def main(_char):
     return rll_string(
         str(
             ord(
-                str(_char)
+                _char.__data__
             )
         )
     )
@@ -438,7 +438,7 @@ def main(_char):
     return rll_string(
         str(
             chr(
-                int(_char)
+                _char.__data__
             )
         )
     )
@@ -452,7 +452,7 @@ def main(*ast):
     for a in ast:
         key = _vm.rll_eval(a[0])
         value = _vm.rll_eval(a[1])
-        d[str(key)] = value
+        d[key] = value
     return rll_dict(
         d
     )
@@ -462,7 +462,7 @@ def main(*ast):
     geval=1,
     aevalcode="""
 def main(_TungSahur):
-    return rll_number(int(_TungSahur))
+    return rll_number(_TungSahur)
     """),
 
 "lst": Command(
@@ -496,16 +496,16 @@ def main(_Code):
 
 "import": Command(
     geval=1,
-    aevalcode="""
+    aevalcode=r"""
 def main(_ModuleName):
-    _vm.rll_include(_vm.stdlib_path + "\\\\" + str(_ModuleName) + ".rkll")
+    _vm.rll_include(_vm.stdlib_path + "\\" + str(_ModuleName))
     """),
 
 "include": Command(
     geval=1,
     aevalcode="""
 def main(_ModuleName):
-    _vm.rll_include(str(_ModuleName) + ".rkll")
+    _vm.rll_include(str(_ModuleName))
     """),
 
 # otros
@@ -588,26 +588,6 @@ def main(__IoCode):
     return rll_number(
         os.system(str(__IoCode))
     )
-"""
-),
-
-"__ioos.env_set": Command(
-    geval=-1,
-    aevalcode="""
-def main(_EnvVarName, _v):
-    import os
-
-    if isinstance(_v, rll_string):
-        tmp = str(_v)
-    elif isinstance(_v, rll_number):
-        tmp = str(int(_v))
-    elif isinstance(_v, rll_array):
-        tmp = str(list(_v))
-    else:
-        raise TypeError("Unsupported RLL type")
-
-    os.environ[str(_EnvVarName)] = tmp
-    return rll_number(0)
 """
 ),
 

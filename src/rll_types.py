@@ -69,7 +69,7 @@ class RllType(BaseRllObj):
     
     def __getitem__(self, index):
         if isinstance(self.__data__, dict):
-            return self.__data__[str(index)]
+            return self.__data__[index]
         else:
             if index > 0:
                 return self.__data__[index-1]
@@ -78,7 +78,7 @@ class RllType(BaseRllObj):
 
     def __setitem__(self, key, value):
         if isinstance(self.__data__, dict):
-            k =str(key)
+            k = key
         else:
             key = int(key)
             if key > 0:
@@ -89,7 +89,6 @@ class RllType(BaseRllObj):
 
     def __iter__(self):
         return iter(self.__data__)
-
 
     def __eq__(self, unself):
         return self.__data__ == unself
@@ -131,11 +130,16 @@ class RllType(BaseRllObj):
     def __mod__(self, unself):
             return self.__data__ / unself.__data__
 
-class rll_array(RllType):
-    def __repr__(self):
-        return f"array({','.join(map(str, self.__data__))})"
+    def __hash__(self):
+         return self.__data__.__hash__()
+
+class rll_array(RllType):pass
 class rll_string(RllType):pass
 class rll_number(RllType):
     def __init__(self, rdata):
-        super().__init__(Decimal(rdata))
+        if isinstance(rdata, bool):
+            rdata = int(rdata)
+        super().__init__(Decimal(str(rdata)))
+    def __repr__(self):
+         return str(self.__data__)
 class rll_dict(RllType):pass

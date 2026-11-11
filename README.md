@@ -8,7 +8,7 @@ La extension de archivos oficial de RLL es `*.rkll`
 
 ## Version
 
-RLL 1.2.0
+RLL 1.2.4
 
 ## Caracterisicas
 

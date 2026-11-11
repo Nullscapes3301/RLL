@@ -42,7 +42,7 @@ def wget(url):
     with urllib.request.urlopen(url) as response:
         return response.read()
 
-if (opcode is None) or (opcode == "--help"):
+if (opcode == "--help"):
     print("""\
 usage: rll [ option | file ] [ args ] ...
 Options:
@@ -50,6 +50,8 @@ Options:
     Show this message
 --version
     Show RLL version
+--repl
+    Start the RLL repl
 --sm
     Show installed modules
 --im <module> [-from <link>]
@@ -123,7 +125,7 @@ elif opcode == "--im":
 
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
-                with open(file_path, "wb", encoding="utf-8") as file:
+                with open(file_path, "wb") as file:
                     file.write(content)
 
             print(f'Module "{pkg}" installed successfully')
@@ -142,6 +144,19 @@ elif opcode == "--im":
         except Exception as err:
             print(f"Something happened while installing the module: {err!r}")
             sys.exit(1)
+
+elif opcode == "--repl" or opcode is None:
+    from rll_types import *
+    oi = RllOi()
+    oi.globals["__argv__"] = rll_array([])
+    while True:
+        try:
+            oi.prompt = input(">>> ")
+            oi() # __call_ ejecuta el prompt
+        except EOFError:
+            break
+        except KeyboardInterrupt:
+            break
 
 else:
     if os.path.exists(opcode):
