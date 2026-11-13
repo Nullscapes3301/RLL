@@ -102,15 +102,8 @@ Error message:
 
         _ModuleName = str(_ModuleName)
 
-        mod = os.path.basename(_ModuleName)[:-5]
-
-        if mod.lower() in ["io", "iostream"]:
-            raise ModuleNotFoundError(f"\"{mod}\" isn't acceptable in RLL module name standars")
-
         if _ModuleName in self.imports:
             return
-
-        _ModuleName = os.path.join(self.stdlib_path, _ModuleName)
 
         if os.path.isdir(_ModuleName):
             _ModuleName = os.path.join(_ModuleName, "__init__.rkll")
@@ -121,7 +114,11 @@ Error message:
             with open(_ModuleName, encoding="utf-8") as file:
                 rll_code = file.read()
         except FileNotFoundError:
-            raise ModuleNotFoundError(f"No module named '{mod}'")
+            if os.path.basename(_ModuleName).endswith(".rkll"):
+                nn = os.path.basename(_ModuleName)[:-5]
+            else:
+                nn = os.path.basename(_ModuleName)
+            raise ModuleNotFoundError(f"No module named '{nn}'")
 
         self.imports.append(_ModuleName)
 
