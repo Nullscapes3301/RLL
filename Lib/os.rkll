@@ -23,7 +23,7 @@
 (macro "get_cwd" {
     (if (== __system__ "nt")
         (__ioos.os_call "chdir > temp")
-        (__ioos.os_call "pwd > temp")
+        (__ioos.os_call "pwd > temp") ; "> temp" 😭
     )
     (return (open "temp" "r") )
     (remove "temp")
