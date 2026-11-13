@@ -24,10 +24,35 @@ SOFTWARE.
 """
 
 
+def dc(text):
+    read_str = False
+    read_com = False
+    result = []
+
+    for char in text:
+        if char == "\n":
+            read_com = False
+            result.append(char)
+            continue
+
+        if not read_str and char == ";":
+            read_com = True
+            continue
+
+        if read_com:
+            continue
+
+        if char == '"':
+            read_str = not read_str
+
+        result.append(char)
+
+    return "".join(result)
 
 import re
 
 def lexer(source):
+    source = dc(source)
     pattern = r'"(?:\\.|[^"\\])*"|-?\d+(?:\.\d+)?|[(){}\[\]]|[^\s(){}\[\]"]+'
     tokens = []
     for value in re.findall(pattern, source):

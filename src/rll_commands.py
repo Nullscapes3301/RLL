@@ -101,12 +101,18 @@ class Command(BaseRllObj):
         else:
             _original_globals = _vm.globals.copy()
             try:
+                evaluated_args = [
+                    _vm.rll_eval(arg) for arg in largs
+                ]
+
                 for r in range(len(self.__geval__)):
-                    _vm.globals[str(self.__geval__[r])] = largs[r]
+                    _vm.globals[str(self.__geval__[r])] = evaluated_args[r]
+
                 ret = _vm.rll_eval(self.__aevalcode__)
             finally:
                 _vm.globals.clear()
                 _vm.globals.update(_original_globals)
+
             return ret
 
 commands = {
@@ -263,7 +269,6 @@ def main(_a, _b):
     geval=-1,
     aevalcode="""
 def main(_a):
-    print("NOT RECEIVED:", repr(_a), type(_a))
     a = bool(_a)
     return rll_number(not a)
 """),
@@ -328,7 +333,7 @@ def main(_a1, _b2):
     geval=2,
     aevalcode="""
 def main(_a1, _b2):
-    return rll_number(_a1 < _b2
+    return rll_number(_a1 < _b2)
     """),
 
 ">": Command(
@@ -344,9 +349,9 @@ def main(_a1, _b2):
     geval=-1,
     aevalcode="""
 def main(_IndexNum, _List):
-    if not isinstance(_List, (rll_array, rll_dict)):
-        raise TypeError("getelem only works with arrays and dicts")
-    return _List[int(_IndexNum)]
+    if not isinstance(_List, (rll_array, rll_dict, rll_string)):
+        raise TypeError("getelem only works with arrays, dicts and strings")
+    return _vm.rllify(_List[int(_IndexNum)])
     """),
 
 "setelem": Command(
@@ -403,6 +408,7 @@ def main(_Condition, _Code):
     aevalcode="""
 def main(_VarName, _IterVar, _IterCode):
     for i in _vm.rll_eval(_IterVar):
+        i = _vm.rllify(i)
         _vm.globals[str(_VarName)] = i
         if bool(_vm.rll_eval(_IterCode)):
             break
@@ -422,11 +428,9 @@ def main(_TungSahur):
     geval=1,
     aevalcode="""
 def main(_char):
-    return rll_string(
-        str(
-            ord(
-                str(_char.__data__)
-            )
+    return rll_number(
+        ord(
+            str(_char.__data__)
         )
     )
     """),
@@ -553,6 +557,15 @@ def main(_MacroName, _MacroCode):
 def main(_code, *args):
     return rll_string(
         str(_code).join(str(x) for x in args)
+    )
+    """),
+
+"concat": Command(
+    geval=-1,
+    aevalcode="""
+def main(_code, *args):
+    return rll_string(
+        str(" ").join(str(x) for x in args)
     )
     """),
 

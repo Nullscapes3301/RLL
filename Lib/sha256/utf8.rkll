@@ -1,0 +1,42 @@
+
+(func "utf8" (list "text")
+{
+    (set "bytes" [])
+
+    (for "c" text
+    {
+        (set "n" (ord c))
+
+        (if (< n 128)
+        {
+            ; 1 byte: 0xxxxxxx
+            (append n bytes)
+        }
+        {
+            (if (< n 2048)
+            {
+                ; 2 bytes: 110xxxxx 10xxxxxx
+                (append (+ 192 (// n 64)) bytes)
+                (append (+ 128 (% n 64)) bytes)
+            }
+            {
+                (if (< n 65536)
+                {
+                    ; 3 bytes: 1110xxxx 10xxxxxx 10xxxxxx
+                    (append (+ 224 (// n 4096)) bytes)
+                    (append (+ 128 (% (// n 64) 64)) bytes)
+                    (append (+ 128 (% n 64)) bytes)
+                }
+                {
+                    ; 4 bytes: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+                    (append (+ 240 (// n 262144)) bytes)
+                    (append (+ 128 (% (// n 4096) 64)) bytes)
+                    (append (+ 128 (% (// n 64) 64)) bytes)
+                    (append (+ 128 (% n 64)) bytes)
+                })
+            })
+        })
+    })
+
+    (return bytes)
+})

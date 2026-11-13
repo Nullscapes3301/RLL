@@ -73,6 +73,7 @@ class RllOi: # RLL Official Interpreter
         __set__(self)
 
         try:
+            global a
             self.l = self.lexer(self.prompt)
             self.code = self.parser(self.l)
             for a in self.code:
@@ -90,13 +91,28 @@ Fatal Error:
     {msg}
 
 Error message:
-    {err}\
-""")
+    {err}
+
+At block:
+    ({a[0]}{" ..." if len(a)!=1 else ""})\
+""")        
             exit_code =  1
         finally:
             __unset__(self)
 
         return exit_code
+
+    def rllify(self, typed):
+        if isinstance(typed, RllType):
+            return typed
+        elif isinstance(typed, str):
+            return rll_string(typed)
+        elif isinstance(typed, (int, float, Decimal) ):
+            return rll_number(Decimal(str(typed)))
+        elif isinstance(typed, dict):
+            return rll_dict(typed)
+        elif isinstance(typed, (list, tuple)):
+            return rll_array(list(typed))
 
     def rll_include(self, _ModuleName):
 
@@ -148,11 +164,6 @@ Error message:
         if isinstance(code, list):
             opcode = code[0]
             args = code[1:]
-
-            # Hacer que rem deje de ser un comando para pasar a ser sintaxis "especial" hace mas
-            # rapido el interprete
-            if opcode == "rem":
-                return rll_number(0)
 
             # Manejar los bloques de comandos(el parser les pone como progn)
             if opcode == "progn":

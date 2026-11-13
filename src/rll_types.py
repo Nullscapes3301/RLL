@@ -118,7 +118,7 @@ class RllType(BaseRllObj):
     def __mul__(self, unself):
             return self.__data__ * unself.__data__
 
-    def __twomul__(self, unself):
+    def __pow__(self, unself):
         return self.__data__ ** unself.__data__
 
     def __truediv__(self, unself):
@@ -128,7 +128,7 @@ class RllType(BaseRllObj):
             return int(self.__data__ // unself.__data__)
 
     def __mod__(self, unself):
-            return self.__data__ / unself.__data__
+            return self.__data__ % unself.__data__
 
     def __hash__(self):
          return self.__data__.__hash__()

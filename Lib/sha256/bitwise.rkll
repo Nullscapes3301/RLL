@@ -1,0 +1,103 @@
+(func "bit" (list "n" "i")
+{
+    (return (% (// n (** 2 i)) 2))
+})
+
+(func "BAND" (list "a" "b")
+{
+    (set "result" 0)
+    (set "p" 1)
+    (set "i" 0)
+    (while (< i 32)
+    {
+        (if (& (== (bit a i) 1) (== (bit b i) 1))
+            (set "result" (+ result p))
+            (pass)
+        )
+        (set "p" (* p 2))
+        (set "i" (+ i 1))
+    })
+    (return result)
+})
+
+(func "BXOR" (list "a" "b")
+{
+    (set "result" 0)
+    (set "p" 1)
+    (set "i" 0)
+    (while (< i 32)
+    {
+        (if (!= (bit a i) (bit b i))
+            (set "result" (+ result p))
+            (pass)
+        )
+        (set "p" (* p 2))
+        (set "i" (+ i 1))
+    })
+    (return result)
+})
+
+(func "BNOT" (list "a")
+{
+    (return (- 4294967295 a))
+})
+
+(func "ROTR" (list "x" "n")
+{
+    (set "p" (** 2 n))
+    (set "low" (% x p))
+    (set "high" (// x p))
+    (return (+ (* low (** 2 (- 32 n))) high))
+})
+
+(func "SHR" (list "x" "n")
+{
+    (return (// x (** 2 n)))
+})
+
+
+(func "CH" (list "x" "y" "z")
+{
+    (return (BXOR (BAND x y) (BAND (BNOT x) z)))
+})
+
+(func "MAJ" (list "x" "y" "z")
+{
+    (return (BXOR (BXOR (BAND x y) (BAND x z)) (BAND y z)))
+})
+
+(func "add32" (list "a" "b")
+{
+    (return (% (+ a b) 4294967296))
+})
+
+(func "hexword" (list "n")
+{
+    (set "digits" "0123456789abcdef")
+    (set "result" "")
+    (set "i" 0)
+
+    (while (< i 8)
+    {
+        (set "digit" (% n 16))
+        (set "result" (join "" (getelem (+ digit 1) digits) result))
+        (set "n" (// n 16))
+        (set "i" (+ i 1))
+    })
+
+    (return result)
+})
+
+(func "hex256" (list "H")
+{
+    (set "result" "")
+    (set "i" 1)
+
+    (while (<= i 8)
+    {
+        (set "result" (join "" result (hexword (getelem i H))))
+        (set "i" (+ i 1))
+    })
+
+    (return result)
+})

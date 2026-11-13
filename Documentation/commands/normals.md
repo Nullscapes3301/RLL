@@ -35,3 +35,11 @@ array
 ```
 
 (acepta todos los tipos de datos no solo esos)
+
+## concat
+
+Recibe infinitos argumentos y retorna un string que contiene a todos los argumentos unidos por espacios, es el equivalente de
+
+```rll
+(join " " ... )
+```

@@ -43,6 +43,6 @@ vars = {
     "__author__": rll_string("Nullscapes"),
     "__imod__": rll_number(0),
     "stdlib_path": rll_string(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), "Lib")
+        os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", "Lib")
     ),
 }

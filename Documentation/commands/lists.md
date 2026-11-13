@@ -2,7 +2,7 @@
 
 ## getelem
 
-`getelem` funciona solo con listas y dicts, sirve para obtener en los datos a partir de indices en base 1, recibe dos argumentos, un numero de indice y un tipo permitido.
+`getelem` funciona solo con listas, dicts y strings, sirve para obtener en los datos a partir de indices en base 1, recibe dos argumentos, un numero de indice y un tipo permitido.
 
 ```rll
 (print (getelem 2 (list 10 20 30) ) )

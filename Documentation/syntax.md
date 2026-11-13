@@ -45,11 +45,11 @@ Peeeeeeero no el return solo puede estar en la raiz del arreglo, si esta por eje
 
 ## Comentarios
 
-Los comentarios no son con ; o # y menos con // , en cambio son con... ¡Un comando! Se usa el comando `rem`, no hace falta ponerle string o variables, puede ponerle todo en 'raw' sin pasar nada.
+Los comentarios son como en Lisp, son de una sola linea y usan el simbolo ;, por ejemplo:
 
 ```rll
-(rem "Esto no hace falta")
-(rem Esto se puede)
+(func "semisuma" ["a" "b"] (/ (+ a b)  2 ) ) ; crear funcion
+(print (semisuma 1 1) ) ; llamarla
 ```
 
 ## Funciones del usuario

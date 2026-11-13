@@ -1,0 +1,151 @@
+(func "sha256" (list "text")
+{
+    (set "bytes" (utf8 text))
+    (set "original_length" (len bytes))
+    (set "bit_length" (* original_length 8))
+
+    ; Padding: 0x80 seguido de ceros hasta alcanzar 56 mod 64
+    (append 128 bytes)
+
+    (while (!= (% (len bytes) 64) 56)
+    {
+        (append 0 bytes)
+    })
+
+    ; Longitud original de 64 bits, big-endian
+    (set "high" (// bit_length 4294967296))
+    (set "low" (% bit_length 4294967296))
+
+    (append (// high 16777216) bytes)
+    (append (% (// high 65536) 256) bytes)
+    (append (% (// high 256) 256) bytes)
+    (append (% high 256) bytes)
+
+    (append (// low 16777216) bytes)
+    (append (% (// low 65536) 256) bytes)
+    (append (% (// low 256) 256) bytes)
+    (append (% low 256) bytes)
+
+    ; Estado inicial
+    (set "H" (list
+        1779033703
+        3144134277
+        1013904242
+        2773480762
+        1359893119
+        2600822924
+        528734635
+        1541459225
+    ))
+
+    (set "offset" 1)
+
+    (while (<= offset (len bytes))
+    {
+        ; Leer las primeras 16 palabras del bloque
+        (set "W" [])
+
+        (set "i" 0)
+        (while (< i 16)
+        {
+            (set "p" (+ offset (* i 4)))
+
+            (set "b0" (getelem p bytes))
+            (set "b1" (getelem (+ p 1) bytes))
+            (set "b2" (getelem (+ p 2) bytes))
+            (set "b3" (getelem (+ p 3) bytes))
+
+            (append
+                (+ (+ (+ (* b0 16777216)
+                    (* b1 65536))
+                        (* b2 256))
+                            b3)
+                W
+            )
+
+            (set "i" (+ i 1))
+        })
+
+        ; Expandir las 48 palabras restantes
+        (set "i" 17)
+        (while (<= i 64)
+        {
+            (set "x" (getelem (- i 15) W))
+            (set "y" (getelem (- i 2) W))
+
+            (set "s0" (sigma0 x))
+            (set "s1" (sigma1 y))
+
+            (set "v"
+                (add32
+                    (add32 s1 (getelem (- i 7) W))
+                    (add32 s0 (getelem (- i 16) W))
+                )
+            )
+
+            (append v W)
+            (set "i" (+ i 1))
+        })
+
+        ; Copiar el estado
+        (set "a" (getelem 1 H))
+        (set "b" (getelem 2 H))
+        (set "c" (getelem 3 H))
+        (set "d" (getelem 4 H))
+        (set "e" (getelem 5 H))
+        (set "f" (getelem 6 H))
+        (set "g" (getelem 7 H))
+        (set "h" (getelem 8 H))
+
+        ; 64 rondas
+        (set "i" 1)
+        (while (<= i 64)
+        {
+            (set "S1" (SIGMA1 e))
+            (set "ch" (CH e f g))
+
+            (set "T1"
+                (add32 h
+                    (add32 S1
+                        (add32 ch
+                            (add32
+                                (getelem i K)
+                                (getelem i W)
+                            )
+                        )
+                    )
+                )
+            )
+
+            (set "S0" (SIGMA0 a))
+            (set "maj" (MAJ a b c))
+            (set "T2" (add32 S0 maj))
+
+            (set "h" g)
+            (set "g" f)
+            (set "f" e)
+            (set "e" (add32 d T1))
+            (set "d" c)
+            (set "c" b)
+            (set "b" a)
+            (set "a" (add32 T1 T2))
+
+            (set "i" (+ i 1))
+        })
+
+        ; Acumular estado del bloque
+        (setelem 1 H (add32 (getelem 1 H) a))
+        (setelem 2 H (add32 (getelem 2 H) b))
+        (setelem 3 H (add32 (getelem 3 H) c))
+        (setelem 4 H (add32 (getelem 4 H) d))
+        (setelem 5 H (add32 (getelem 5 H) e))
+        (setelem 6 H (add32 (getelem 6 H) f))
+        (setelem 7 H (add32 (getelem 7 H) g))
+        (setelem 8 H (add32 (getelem 8 H) h))
+
+        (set "offset" (+ offset 64))
+    })
+
+    ; Convertir los ocho words a hexadecimal
+    (return (hex256 H))
+})
