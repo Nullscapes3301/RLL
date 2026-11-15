@@ -1,0 +1,10 @@
+(func "queue_get" ["queue"]
+{
+    (while (== (len queue) 0 ) (pass) )
+    (return (getelem 1 queue) )
+    (delelem 1 queue)
+})
+
+(func "queue_put" ["queue" "elem"]
+    (append elem queue)
+)
