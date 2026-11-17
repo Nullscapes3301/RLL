@@ -15,7 +15,8 @@ En el ejemplo el comando `print` esta recibiendo el string que contiene el texto
 ```rll
 (str 123)
 ```
-va a retoran un string que almacena los tres caracteres "123" 
+
+va a retoran un string que almacena los tres caracteres "123"
 
 ## Acceder a un string
 

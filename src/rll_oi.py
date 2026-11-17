@@ -91,10 +91,7 @@ Fatal Error:
     {msg}
 
 Error message:
-    {err}
-
-At block:
-    ({a[0]}{" ..." if len(a)!=1 else ""})\
+    {err}\
 """)        
             exit_code =  1
         finally:

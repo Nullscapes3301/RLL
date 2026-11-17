@@ -64,6 +64,8 @@ class RllType(BaseRllObj):
             return False
         elif dat == Decimal("0"):
             return False
+        elif dat == {}:
+            return False
         else:
             return True
     

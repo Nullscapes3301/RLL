@@ -57,18 +57,18 @@ Los comentarios son como en Lisp, son de una sola linea y usan el simbolo ;, por
 El usuario puede crear funciones personalizadas con el comando `func`, su sintaxis es la siguiente:
 
 ```ej-lispl
-(func "nombre_de_la_funcion" (list "argumento1" "argumento2") { (print argumento1 ) } )
+(func "nombre_de_la_funcion" ["argumento1" "argumento2"] { (print argumento1 ) } )
 ```
 
 Despues de declararla se puede llamar, la lista representa los argumentos que recibe la funcion se tienen que especificar, no es posible hacer argumentos opcionales como en Python ni tampoco es posible no especificarlos como en, no se, no se me ocurren ejemplos, si no pones un argumento da error, si pasas de mas lo que pasa es que los extras se ignoran. La funcion retorna lo que retorna el bloque de codigo de la funcion.
 Ejemplo:
 
 ```rll
-(func "saludar" (list "nombre") (print "Hola " nombre "!") )
+(func "saludar" ["nombre"] (print "Hola " nombre "!") )
 (saludar "Antonio")
-(func "semisuma" (list "n1" "n2") (/ (+ n1 n2) 2) )
+(func "semisuma" ["n1" "n2"] (/ (+ n1 n2) 2) )
 (print (semisuma 10 20) )
-(func "raise" (list "error" "mensaje") { (print error ": " mensaje) (exit 1) } )
+(func "raise" ["error" "mensaje"] { (print error ": " mensaje) (exit 1) } )
 (raise "NoneError" "No ha pasado nada")
 ```
 

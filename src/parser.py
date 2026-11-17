@@ -76,7 +76,7 @@ def parser(tokens):
                 pos += 1
                 break
 
-            if tokens[pos] in (("char", ")"), ("char", "}")):
+            if tokens[pos] in (("char", ")"), ("char", "}"), ("char", "]")):
                 raise SyntaxError(
                     f"Expected {end!r}, "
                     f"found {tokens[pos][1]!r}"

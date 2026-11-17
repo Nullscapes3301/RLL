@@ -60,11 +60,15 @@ Options:
 """)
 
 elif opcode == "--sm":
-    for i in os.listdir(str(vars["stdlib_path"])):
-        m = i
-        if i.endswith(".rkll"):
-            m = i[:-5]
-        print(m)
+    try:
+        for i in os.listdir(str(vars["stdlib_path"])):
+            m = i
+            if i.endswith(".rkll"):
+                m = i[:-5]
+            print(m)
+    except FileNotFoundError:
+        print("Not library to see")
+        exit(1)
     
 elif opcode == "--version":
     print(f"RLL {vars['__version__']}")
