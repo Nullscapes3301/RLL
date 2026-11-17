@@ -34,6 +34,26 @@ salida:
 
 Funciona igual que `getelem` solo que este recibe un tercer argumento como el nuevo valor del indice
 
+## delelem
+
+Recibe un indice o clave y junto con el objeto que se quiere mutar. Por ejemplo
+
+```rll
+(set "x" [1 2 3] )
+(print x)
+(delelem 1 x)
+(print x)
+```
+
+imprime
+
+```text
+[1, 2, 3]
+[2, 3]
+```
+
+Pero ojo, no retorna el valor
+
 ## append
 
 recibe dos argumentos, un dato para añadir *al final de la lista* y la lista. Este comando retorna la lista con el nuevo valor ademas de modificar la lista original, por ejemplo

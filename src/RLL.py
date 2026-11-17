@@ -151,8 +151,10 @@ elif opcode == "--im":
 
 elif opcode == "--repl":
     from rll_types import *
+    import sys
     oi = RllOi()
     oi.globals["__argv__"] = rll_array([])
+    print(f"RLL version {vars['__version__']} on {sys.platform} by {vars["__author__"]}")
     while True:
         try:
             oi.prompt = input(">>> ")

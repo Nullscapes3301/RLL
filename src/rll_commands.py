@@ -368,6 +368,15 @@ def main(_IndexNum, _List, _Val):
     _List[int(_IndexNum)] = _Val
     """),
 
+"delelem": Command(
+    geval=-1,
+    aevalcode="""
+def main(_IndexNum, _List):
+    if not isinstance(_List, (rll_array, rll_dict)):
+        raise TypeError("setelem only works with arrays and dicts")
+    del _List[int(_IndexNum)]
+    """),
+
 "append": Command(
     geval=-1,
     aevalcode="""
