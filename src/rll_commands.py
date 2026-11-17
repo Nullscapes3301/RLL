@@ -521,8 +521,14 @@ def main(_ModuleName):
 "include": Command(
     geval=1,
     aevalcode="""
-def main(_ModuleName):
-    _vm.rll_include(str(_ModuleName))
+def main(path):
+    focus = _vm.focus
+    try:
+        path = os.path.join(focus, str(path))
+        _vm.focus = os.path.dirname(os.path.abspath(path))
+        _vm.rll_include(path)
+    finally:
+        _vm.focus = focus
     """),
 
 # otros

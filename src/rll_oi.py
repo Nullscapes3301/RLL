@@ -41,8 +41,11 @@ class RllOi: # RLL Official Interpreter
     def __init__(
             self,
             prompt="(pass)",
+            file=None
     ):
         self.prompt = prompt
+
+        self.file = file
 
         self.locals = copy.deepcopy(commands)
         """
@@ -51,6 +54,12 @@ class RllOi: # RLL Official Interpreter
         self.globals = copy.deepcopy(rll_vars.vars)
         """
         globals contiene las variables globales del interprete
+        """
+
+        self.focus = os.path.dirname(os.path.abspath(self.file)) if self.file else os.getcwd()
+        """
+        focus contiene la carpeta desde la que un modulo puede incluir desde rutas relativas
+        (se edita en (include) )
         """
 
         self.builtin_locals = copy.deepcopy(self.locals)
@@ -121,7 +130,8 @@ Error message:
         if os.path.isdir(_ModuleName):
             _ModuleName = os.path.join(_ModuleName, "__init__.rkll")
         else:
-            _ModuleName = _ModuleName + ".rkll"
+            if not _ModuleName.endswith(".rkll"):
+                _ModuleName = _ModuleName + ".rkll"
 
         try:
             with open(_ModuleName, encoding="utf-8") as file:
