@@ -145,3 +145,4 @@ class rll_number(RllType):
     def __repr__(self):
          return str(self.__data__)
 class rll_dict(RllType):pass
+class rll_malloc(RllType):pass

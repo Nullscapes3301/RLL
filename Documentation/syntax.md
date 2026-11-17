@@ -80,4 +80,26 @@ Tambien es posible definir `macros` que devuelven un valor pero **no reciben arg
 ```
 
 Que le pasa a las variables?
-Todas las variables **creadas** adentro de una funcion programada en RLL van a ser borradas inmediatamente, y las que **ya existian** van a recuperar el valor que tenian antes de llamar a la funcion.
+Todas las variables **creadas** adentro de una funcion programada en RLL van a ser borradas inmediatamente, y las que **ya existian** van a recuperar el valor que tenian antes de llamar a la funcion, pero entonces, como cambio un valor? mallocear, en RLL existe la funcion especial `malloc` que hace que una variable no recupere su valor original al salir de la funcion a cambio de no poder obtener su valor despues de mallocear.
+Advertencia: **malloc no reserva memoria dinamica ni nada asi a diferencia de lo que podria sugerir el nombre**.
+Despues de mallocear una variable NO SE PUEDE OBTENER SU VALOR, si tratas de acceder a una variable previamente malloceada el programa dara error.
+Es perfectamente posible mallocear variables fuera de la funcion pero eso no lo considero buena idea y mucho menos buena practica, dentro de una funcion tiene sentido pero fuera de una haras que la variable sea inaccesible por todo el resto del codigo a menos que la des-mallocees.
+Se puede des-mallocear una variable cambiando su valor con por ejemplo set, eso provocara que la variable obtenga un nuevo valor y vuelva a ser accesible pero deje de estar malloceada.
+Por ejemplo:
+
+```rll
+(set "var" 0 )
+(macro "f1" (set "var" 1) )
+(macro "f2" { (set "var" 1) (malloc "var") } )
+(f1)
+(print var)
+(f2)
+(print var)
+```
+
+salida:
+
+```text
+0
+1
+```

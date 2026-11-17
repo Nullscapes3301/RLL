@@ -71,6 +71,7 @@ class Command(BaseRllObj):
                 "rll_string": rll_string,
                 "rll_array": rll_array,
                 "rll_dict": rll_dict,
+                "rll_malloc": rll_malloc,
                 "RllType": RllType,
                 "decimal": Decimal,
                 "RllErrorMsg": RllErrorMsg,
@@ -110,6 +111,9 @@ class Command(BaseRllObj):
 
                 ret = _vm.rll_eval(self.__aevalcode__)
             finally:
+                for var in _vm.globals:
+                    if isinstance(_vm.globals[var], rll_malloc):
+                        _original_globals[var] = _vm.rllify(_vm.globals[var].__data__)
                 _vm.globals.clear()
                 _vm.globals.update(_original_globals)
 
@@ -376,7 +380,7 @@ def main(_Data, _List):
     geval=1,
     aevalcode="""
 def main(_list):
-    return _list.__data__.pop()
+    return _vm.rllify(_list.__data__.pop())
     """),
 
 # Condicional
@@ -588,6 +592,15 @@ def main(_File, _Mode, _WriteThis=""):
         open(str(_File), "w", encoding="utf-8").write(str(_WriteThis))
     elif _Mode == rll_string("w+"):
         open(str(_File), "w+", encoding="utf-8").write(str(_WriteThis))
+"""
+),
+
+"malloc": Command(
+    geval=1,
+    aevalcode="""
+def main(bar):
+    var = str(bar)
+    _vm.globals[var] = rll_malloc(_vm.globals[var].__data__)
 """
 ),
 

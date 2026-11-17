@@ -190,10 +190,15 @@ Error message:
             return self.locals[opcode](*args)
 
         elif isinstance(code, RllType):
+            if isinstance(code, rll_malloc):
+                raise ValueError("You cannot accede to the value of a malloced variable")
             return code
 
         elif code in self.globals:
-            return self.globals[code]
+            val = self.globals[code]
+            if isinstance(val, rll_malloc):
+                raise ValueError("You cannot accede to the value of a malloced variable")
+            return val
 
         else:
             raise ValueError(f"rll_eval method recieved a non existent global: {code!r}")
