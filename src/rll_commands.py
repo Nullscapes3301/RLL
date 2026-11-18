@@ -522,6 +522,7 @@ def main(_ModuleName):
     geval=1,
     aevalcode="""
 def main(path):
+    import os
     focus = _vm.focus
     try:
         path = os.path.join(focus, str(path))

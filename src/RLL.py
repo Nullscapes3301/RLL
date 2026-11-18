@@ -57,7 +57,7 @@ Options:
 --sm
     Show installed modules
 --n
-    Anything
+    Nothing
 --license
     Show the license
 --im <module> [-from <link>]
@@ -195,7 +195,10 @@ elif opcode == "--repl":
         print(f"RLL version {vars['__version__']} on {sys.platform} by {vars["__author__"]}")        
     while True:
         try:
-            oi.prompt = input(">>> ")
+            tung =input(">>> ")
+            if tung == ord(4):
+                raise EOFError()
+            oi.prompt = tung
             oi() # __call_ ejecuta el prompt
         except EOFError:
             break
