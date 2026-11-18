@@ -187,13 +187,12 @@ Error message:
                             # ningun error
                             continue
                         elif i[0] == "break":
-                            if bool(i[1]):
+                            if bool(self.rll_eval(i[1])):
                                 return ret
                     self.rll_eval(i)
 
                 return ret
 
-            
             if opcode not in self.locals:
                 raise NameError(f"rll_eval method recieved a non existent func: {opcode}")
 

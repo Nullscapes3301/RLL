@@ -196,8 +196,6 @@ elif opcode == "--repl":
     while True:
         try:
             tung =input(">>> ")
-            if tung == ord(4):
-                raise EOFError()
             oi.prompt = tung
             oi() # __call_ ejecuta el prompt
         except EOFError:
