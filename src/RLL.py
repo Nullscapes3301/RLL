@@ -46,28 +46,24 @@ if (opcode == "--help") or opcode is None:
     print("""\
 usage: rll [ option | file ] [ args ] ...
 Options:
---help
-    Show this message
---version
-    Show RLL version
---repl [ -nb ]
-    Start the RLL repl
-        -nb
-        No banner at the beginning of the REPL
---sm
-    Show installed modules
---n
-    Nothing
---license
-    Show the license
---im <module> [-from <link>]
-    Install a module.
-    -from <link> specifies a custom module source.\
+--help                              Show this message
+--version                           Show RLL version
+--repl [ -nb ]                      Start the RLL repl
+         -nb                        No banner at the beginning of the REPL
+--sm                                Show installed modules
+--n                                 Nothing
+--license                           Show the license
+--x                                 Show RLL manifest
+--c                                 Execute RLL code in terminal
+--w                                 Modify a manifest key
+--im <module> [-from <link>]        Install a module.
+               -from <link>         Specifies a custom module source.\
 """)
 
 elif opcode == "--sm":
     try:
-        for i in os.listdir(str(vars["stdlib_path"])):
+        temp = RllOi("(pass)")
+        for i in os.listdir(str(temp.stdlib_path)):
             m = i
             if i.endswith(".rkll"):
                 m = i[:-5]
@@ -75,34 +71,19 @@ elif opcode == "--sm":
     except FileNotFoundError:
         print("Not library to see")
         exit(1)
+
+elif opcode == "--c":
+    temp = RllOi(
+        " ".join(argv[2:])
+    )()
+    sys.exit()
     
 elif opcode == "--version":
     print(f"RLL {vars['__version__']}")
 
 elif opcode == "--license":
-    print("""\
-MIT License
-
-Copyright (c) 2026 Nullscapes
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.\
-""")
+    temp = RllOi("(pass)")
+    print(temp.license)
     exit()
 
 elif opcode == "--im":
@@ -184,6 +165,14 @@ elif opcode == "--im":
 elif opcode == "--n":
     sys.exit()
 
+elif opcode == "--w":
+    tmp = RllOi()
+    wwww = tmp.manifest
+    wwwww = tmp.manifest_path
+    wwww[argv[2]] = argv[3]
+    with open(wwwww, "w", encoding="utf-8") as f:
+        json.dump(wwww, f)
+
 elif opcode == "--repl":
     from rll_types import *
     import sys
@@ -202,6 +191,12 @@ elif opcode == "--repl":
             break
         except KeyboardInterrupt:
             print("\nKeyboardInterrupt")
+
+elif opcode == "--x":
+    temp = RllOi()
+    print("Warning: ¡RLL uses the character ´ to replace by something else!")
+    print(temp.manifest)
+    sys.exit()
 
 else:
     if os.path.exists(opcode):

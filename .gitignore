@@ -1,9 +1,10 @@
 # Temporary files
 /src/test.rkll
 /tempCodeRunnerFile.bat
-
-# Git automation
-/gitcommit.bat
+*.bat
+/dist
+*.exe
+*.asm
 
 # Python cache
 __pycache__/
