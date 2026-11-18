@@ -511,6 +511,14 @@ def main(_Code):
         _vm.rll_eval(p)
     """),
 
+"execo": Command(
+    geval=1,
+    aevalcode="""
+def main(_Code):
+    rll_code = str(_Code)
+    _vm.__class__(prompt=rll_code)()
+    """),
+
 "import": Command(
     geval=1,
     aevalcode=r"""

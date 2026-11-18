@@ -102,3 +102,15 @@ salida:
 ```rll
 Hola mundo!
 ```
+
+## execo
+
+Hace lo mismo que `exec` pero con una diferencia importantisima. En un entorno completamente aislado del programa principal, por ejemplo
+
+```rll
+(set "x" 0)
+(exec "(print x)")
+(execo "(print x)")
+```
+
+El `exec` funcionara y mostrara 0, pero `execo` lo ejecutara aislado y dara error porque no encontara la variable "x".
