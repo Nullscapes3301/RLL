@@ -50,10 +50,16 @@ Options:
     Show this message
 --version
     Show RLL version
---repl
+--repl [ -nb ]
     Start the RLL repl
+        -nb
+        No banner at the beginning of the REPL
 --sm
     Show installed modules
+--n
+    Anything
+--license
+    Show the license
 --im <module> [-from <link>]
     Install a module.
     -from <link> specifies a custom module source.\
@@ -72,6 +78,32 @@ elif opcode == "--sm":
     
 elif opcode == "--version":
     print(f"RLL {vars['__version__']}")
+
+elif opcode == "--license":
+    print("""\
+MIT License
+
+Copyright (c) 2026 Nullscapes
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.\
+""")
+    exit()
 
 elif opcode == "--im":
 
@@ -149,12 +181,18 @@ elif opcode == "--im":
             print(f"Something happened while installing the module: {err!r}")
             sys.exit(1)
 
+elif opcode == "--n":
+    sys.exit()
+
 elif opcode == "--repl":
     from rll_types import *
     import sys
     oi = RllOi(file="<rll-repl>")
     oi.globals["__argv__"] = rll_array([])
-    print(f"RLL version {vars['__version__']} on {sys.platform} by {vars["__author__"]}")
+    if len(argv) > 1 and "-nb" in argv:
+        pass
+    else:
+        print(f"RLL version {vars['__version__']} on {sys.platform} by {vars["__author__"]}")        
     while True:
         try:
             oi.prompt = input(">>> ")
