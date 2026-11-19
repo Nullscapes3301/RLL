@@ -178,13 +178,14 @@ elif opcode == "--repl":
     import sys
     oi = RllOi(file="<rll-repl>")
     oi.globals["__argv__"] = rll_array([])
+    oi.globals["__ps1__"] = rll_array(">>> ")
     if len(argv) > 1 and "-nb" in argv:
         pass
     else:
         print(f"RLL version {vars['__version__']} on {sys.platform} by {vars["__author__"]}")        
     while True:
         try:
-            tung =input(">>> ")
+            tung =input(str(oi.globals["__ps1__"]))
             oi.prompt = tung
             oi() # __call_ ejecuta el prompt
         except EOFError:
