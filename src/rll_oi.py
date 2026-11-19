@@ -151,6 +151,22 @@ Error message:
             return rll_dict(typed)
         elif isinstance(typed, (list, tuple)):
             return rll_array(list(typed))
+        else:
+            return rll_number(0)
+
+    def rllyfi(self, typed):
+        if isinstance(typed, rll_string):
+            return str(typed)
+        elif isinstance(typed, rll_number):
+            try:
+                tung = int(typed)
+            except:
+                tung = float(str(typed))
+            return tung
+        elif isinstance(typed, rll_dict):
+            return dict(typed)
+        elif isinstance(typed, rll_array):
+            return list(typed)
 
     def rll_include(self, _ModuleName):
         _ModuleName = str(_ModuleName)
@@ -161,9 +177,7 @@ Error message:
         if os.path.isdir(_ModuleName):
             _ModuleName = os.path.join(_ModuleName, "__init__.rkll")
         else:
-            if _ModuleName.endswith(".rkll"):
-                raise ...
-            else:
+            if not _ModuleName.endswith(".rkll"):
                 _ModuleName = _ModuleName + ".rkll"
 
         if not os.path.exists(self.stdlib_path):

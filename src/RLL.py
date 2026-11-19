@@ -195,7 +195,8 @@ elif opcode == "--repl":
 elif opcode == "--x":
     temp = RllOi()
     print("Warning: ¡RLL uses the character ´ to replace by something else!")
-    print(temp.manifest)
+    for key in temp.manifest:
+        print(f'"{key}" -> "{temp.manifest[key]}"')
     sys.exit()
 
 else:
