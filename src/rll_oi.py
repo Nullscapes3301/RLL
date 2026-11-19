@@ -66,6 +66,10 @@ class RllOi: # RLL Official Interpreter
         if isinstance(self.manifest, dict):
             self.manifest = Manifest(**self.manifest)
 
+        self.actual = None
+        """
+        actual es la ultima instruccion evaluada
+        """
         self.locals = copy.deepcopy(commands)
         """
         locals contiene los comandos, no algo como variables locales
@@ -95,7 +99,7 @@ class RllOi: # RLL Official Interpreter
             self.stdlib_path = None
         else:
             self.globals["stdlib_path"] = rll_string(self.stdlib_path)
-        self.globals["__file__"] = rll_string(str(file))
+        self.globals["__file__"] = rll_string(os.path.abspath(str(file)))
 
         self.parser = parser
         self.lexer = lexer
@@ -156,7 +160,13 @@ Fatal Error:
     {msg}
 
 Error message:
-    {err}\
+    {err}
+
+At file:
+    {self.globals["__file__"]}
+
+At place:
+    {self.actual}
 """)        
             exit_code =  1
         finally:
@@ -246,6 +256,12 @@ Error message:
         if isinstance(code, list):
             opcode = code[0]
             args = code[1:]
+
+            tungs = ""
+            if len(args) > 0:
+                tungs = " ..."
+
+            self.actual = f"({opcode}{tungs})"
 
             # Manejar los bloques de comandos(el parser les pone como progn)
             if opcode == "progn":

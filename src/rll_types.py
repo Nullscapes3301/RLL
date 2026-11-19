@@ -97,6 +97,12 @@ class RllType(BaseRllObj):
             else:
                 raise IndexError("Negative index aren't admitted")
 
+    def _repr(self):
+        if isinstance(self, rll_string):
+            return f'"{self.__data__}"'
+        else:
+            return repr(self.__data__)
+
     def __setitem__(self, key, value):
         if isinstance(self.__data__, dict):
             k = key
