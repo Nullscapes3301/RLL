@@ -114,3 +114,11 @@ Hace lo mismo que `exec` pero con una diferencia importantisima. En un entorno c
 ```
 
 El `exec` funcionara y mostrara 0, pero `execo` lo ejecutara aislado y dara error porque no encontara la variable "x".
+
+## vars
+
+Retorna un dict con todas las variables y sus respectivos valores.
+
+## funcs
+
+Retorna una lista con todas las funciones disponibles.

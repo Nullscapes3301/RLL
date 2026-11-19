@@ -628,6 +628,28 @@ def main(bar):
 """
 ),
 
+"vars": Command(
+    geval=0,
+    aevalcode="""
+def main():
+    ret = {}
+    for x in _vm.globals:
+        ret[rll_string(x)] = _vm.globals[x]
+    return rll_dict(ret)
+"""
+),
+
+"funcs": Command(
+    geval=0,
+    aevalcode="""
+def main():
+    ret = []
+    for x in _vm.locals:
+        ret.append(rll_string(str(x)))
+    return rll_array(ret)
+"""
+),
+
 # internos
 
 "__ioos.os_call": Command(
