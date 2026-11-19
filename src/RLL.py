@@ -169,7 +169,11 @@ elif opcode == "--w":
     tmp = RllOi()
     wwww = tmp.manifest
     wwwww = tmp.manifest_path
-    wwww[argv[2]] = argv[3]
+    try:
+        wwww[argv[2]] = argv[3]
+    except IndexError:
+        print("Not enough arguments")
+        sys.exit(1)
     with open(wwwww, "w", encoding="utf-8") as f:
         json.dump(dict(wwww), f)
 
