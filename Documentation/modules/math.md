@@ -9,6 +9,8 @@ Math incluye funciones matematicas, incluye las siguientes funciones:
 * max
 * sign
 * !
+* ++
+* --
 
 ## sqrt
 
@@ -70,3 +72,11 @@ Retorna el siguiente valor dependiendo de si el numero es negativo, cero o o pos
 * x<0 : retorna -1
 * x==0 : retora 0
 * x>0 : retorna 1
+
+## ++
+
+Recibe en texto el nombre de una variable, le suma uno y retorna el resultado aparte de cambiar la variable
+
+## --
+
+Recibe en texto el nombre de una variable, le resta uno y retorna el resultado aparte de cambiar la variable
