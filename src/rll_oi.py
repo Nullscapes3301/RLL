@@ -92,8 +92,9 @@ class RllOi: # RLL Official Interpreter
         try:
             self.stdlib_path = self.manifest.stdlib.replace("´", self.selfdir)
         except (RuntimeError, AttributeError):
-            self.stdlib_path = rll_number(0)
-        self.globals["stdlib_path"] = rll_string(self.stdlib_path)
+            self.stdlib_path = None
+        else:
+            self.globals["stdlib_path"] = rll_string(self.stdlib_path)
         self.globals["__file__"] = rll_string(str(file))
 
         self.parser = parser
@@ -103,6 +104,8 @@ class RllOi: # RLL Official Interpreter
 MIT License
 
 Copyright (c) 2026 Nullscapes
+
+Repository: https://github.com/Nullscapes3301/RLL/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

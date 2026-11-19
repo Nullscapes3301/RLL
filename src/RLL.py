@@ -42,7 +42,7 @@ def wget(url):
     with urllib.request.urlopen(url) as response:
         return response.read()
 
-if (opcode == "--help") or opcode is None:
+if (opcode in ["--help", "--?"]) or opcode is None:
     print("""\
 usage: rll [ option | file ] [ args ] ...
 Options:

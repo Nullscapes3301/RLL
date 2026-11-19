@@ -93,7 +93,7 @@ class RllType(BaseRllObj):
             return self.__data__[index]
         else:
             if index > 0:
-                return self.__data__[index-1]
+                return self.__data__[int(index)-1]
             else:
                 raise IndexError("Negative index aren't admitted")
 
@@ -142,25 +142,25 @@ class RllType(BaseRllObj):
 
 
     def __add__(self, unself):
-        return self.__data__ + unself.__data__
+        return self.__data__ + unself
 
     def __sub__(self, unself):
-            return self.__data__ - unself.__data__
+            return self.__data__ - unself
 
     def __mul__(self, unself):
-            return self.__data__ * unself.__data__
+            return self.__data__ * unself
 
     def __pow__(self, unself):
-        return self.__data__ ** unself.__data__
+        return self.__data__ ** unself
 
     def __truediv__(self, unself):
-            return Decimal(self.__data__ / unself.__data__)
+            return Decimal(self.__data__ / unself)
 
     def __floordiv__(self, unself):
-            return int(self.__data__ // unself.__data__)
+            return int(self.__data__ // unself)
 
     def __mod__(self, unself):
-            return self.__data__ % unself.__data__
+            return self.__data__ % unself
 
     def __hash__(self):
          return self.__data__.__hash__()
