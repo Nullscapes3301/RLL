@@ -141,7 +141,7 @@ SOFTWARE.\
             exit_code = 2
         except SystemExit as e:
             sys.exit(e)
-        except NoneError as err:
+        except BaseException as err:
             msg = type(err).__name__
             if isinstance(err, RllErrorMsg):
                 msg = "Raised error"
