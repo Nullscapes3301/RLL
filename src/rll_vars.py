@@ -36,11 +36,13 @@ a = [rll_string(i) for i in sys.argv[1:]]
 
 vars = {
     "__system__": rll_string(os.name),
-    "__platform__": rll_string(platform.platform()),
+    "__platform__": rll_string(platform.system()),
     "__name__": rll_string("RLL"),
     "__version__": rll_number("1.29"),
     "__argv__": rll_array(a),
     "__author__": rll_string("Nullscapes"),
     "__imod__": rll_number(0),
-    "stdlib_path": None # Se modifica en el interprete
+    # Se modifica en el interprete
+    "stdlib_path": None,
+    "__file__": None
 }

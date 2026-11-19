@@ -53,7 +53,7 @@ import re
 
 def lexer(source):
     source = dc(source)
-    pattern = r'"(?:\\.|[^"\\])*"|-?\d+(?:\.\d+)?|[(){}\[\]]|[^\s(){}\[\]"]+'
+    pattern = r'"[^"]*"|-?\d+(?:\.\d+)?|[(){}\[\]]|[^\s(){}\[\]"]+'
     tokens = []
     for value in re.findall(pattern, source):
         if value in ("(", ")", "{", "}", "[", "]"):

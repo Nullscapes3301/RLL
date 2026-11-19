@@ -47,7 +47,7 @@ class RllOi: # RLL Official Interpreter
         self.prompt = prompt
 
         self.file = file
-
+  
         self.selffile = os.path.join(os.path.abspath(__file__))
         self.selfdir  = os.path.dirname(self.selffile)
         self.manifest_path = os.path.join(os.path.dirname(self.selffile),"manifest.json")
@@ -80,6 +80,7 @@ class RllOi: # RLL Official Interpreter
 
         self.stdlib_path = self.manifest["stdlib"].replace("´", self.selfdir)
         self.globals["stdlib_path"] = rll_string(self.stdlib_path)
+        self.globals["__file__"] = rll_string(str(file))
 
         self.parser = parser
         self.lexer = lexer

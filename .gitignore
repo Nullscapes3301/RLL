@@ -1,8 +1,7 @@
 # Temporary files
 /src/test.rkll
-/tempCodeRunnerFile.bat
+tempCodeRunnerFile*
 *.bat
-/dist
 *.exe
 *.asm
 
