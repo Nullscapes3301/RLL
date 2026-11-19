@@ -44,7 +44,7 @@ def wget(url):
 
 if (opcode in ["--help", "--?"]) or opcode is None:
     print("""\
-usage: rll [ option | file ] [ args ]
+Usage: rll [ option | file ] [ args ]
 Options:
 --help                              Show this message
 --?                                 Show this message
