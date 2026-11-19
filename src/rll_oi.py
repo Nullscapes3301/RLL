@@ -129,7 +129,9 @@ SOFTWARE.\
         __set__(self)
 
         class NoneError(BrokenPipeError): pass  # Error imposible de obtener hecho para que se
-                                                # pueda aislar la ejecucion sin quitar el try
+                                                # pueda aislar la ejecucion sin quitar el try.
+                                                # Hereda especificamente BrokenPipeError porque
+                                                # es una excepcion muy poco comun.
 
         try:
             global a
