@@ -56,11 +56,12 @@ class RllOi: # RLL Official Interpreter
             with open(self.manifest_path, "r", encoding="utf-8") as f:
                 self.manifest = json.loads(f.read())
         except (FileNotFoundError, json.JSONDecodeError):
-            print("Waring: ¡RLL is running without manifest!")
+            print("Warning: ¡RLL is running without manifest!")
             class temp:
                 def __getitem__(tmp, key):
                     raise RuntimeError("Cannot read manifest")
             self.manifest = temp()
+            self.manifest_path = None
 
         if isinstance(self.manifest, dict):
             self.manifest = Manifest(**self.manifest)
@@ -90,7 +91,7 @@ class RllOi: # RLL Official Interpreter
 
         try:
             self.stdlib_path = self.manifest.stdlib.replace("´", self.selfdir)
-        except RuntimeError:
+        except (RuntimeError, AttributeError):
             self.stdlib_path = rll_number(0)
         self.globals["stdlib_path"] = rll_string(self.stdlib_path)
         self.globals["__file__"] = rll_string(str(file))
@@ -127,6 +128,9 @@ SOFTWARE.\
 
         __set__(self)
 
+        class NoneError(BrokenPipeError): pass  # Error imposible de obtener hecho para que se
+                                                # pueda aislar la ejecucion sin quitar el try
+
         try:
             global a
             self.l = self.lexer(self.prompt)
@@ -137,7 +141,7 @@ SOFTWARE.\
             exit_code = 2
         except SystemExit as e:
             sys.exit(e)
-        except BaseException as err:
+        except NoneError as err:
             msg = type(err).__name__
             if isinstance(err, RllErrorMsg):
                 msg = "Raised error"
@@ -183,6 +187,7 @@ Error message:
             return list(typed)
 
     def rll_include(self, _ModuleName):
+        # stdlib_path no se usa aqui, se usa dentro del comando import
         _ModuleName = str(_ModuleName)
 
         if _ModuleName in self.imports:

@@ -355,7 +355,7 @@ def main(_a1, _b2):
 def main(_IndexNum, _List):
     if not isinstance(_List, (rll_array, rll_dict, rll_string)):
         raise TypeError("getelem only works with arrays, dicts and strings")
-    return _vm.rllify(_List[int(_IndexNum)])
+    return _vm.rllify(_List[_IndexNum])
     """),
 
 "setelem": Command(
@@ -365,7 +365,7 @@ def main(_IndexNum, _List, _Val):
     if not isinstance(_List, (rll_array, rll_dict)):
         raise TypeError("setelem only works with arrays and dicts")
 
-    _List[int(_IndexNum)] = _Val
+    _List[_IndexNum] = _Val
     """),
 
 "delelem": Command(
@@ -374,7 +374,7 @@ def main(_IndexNum, _List, _Val):
 def main(_IndexNum, _List):
     if not isinstance(_List, (rll_array, rll_dict)):
         raise TypeError("setelem only works with arrays and dicts")
-    del _List[int(_IndexNum)]
+    del _List[_IndexNum]
     """),
 
 "append": Command(
