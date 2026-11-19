@@ -44,14 +44,16 @@ def wget(url):
 
 if (opcode in ["--help", "--?"]) or opcode is None:
     print("""\
-usage: rll [ option | file ] [ args ] ...
+usage: rll [ option | file ] [ args ]
 Options:
 --help                              Show this message
+--?                                 Show this message
 --version                           Show RLL version
 --repl [ -nb ]                      Start the RLL repl
          -nb                        No banner at the beginning of the REPL
 --sm                                Show installed modules
 --n                                 Nothing
+--N                                 Nothing but exit with code 1
 --license                           Show the license
 --x                                 Show RLL manifest
 --c                                 Execute RLL code in terminal
@@ -62,7 +64,7 @@ Options:
 
 elif opcode == "--sm":
     try:
-        temp = RllOi("(pass)")
+        temp = RllOi()
         for i in os.listdir(str(temp.stdlib_path)):
             m = i
             if i.endswith(".rkll"):
@@ -82,7 +84,7 @@ elif opcode == "--version":
     print(f"RLL {vars['__version__']}")
 
 elif opcode == "--license":
-    temp = RllOi("(pass)")
+    temp = RllOi()
     print(temp.license)
     exit()
 
@@ -165,6 +167,9 @@ elif opcode == "--im":
 elif opcode == "--n":
     sys.exit()
 
+elif opcode == "--N":
+    sys.exit(1)
+
 elif opcode == "--w":
     tmp = RllOi()
     wwww = tmp.manifest
@@ -210,10 +215,12 @@ elif opcode == "--x":
 
 else:
     if os.path.exists(opcode):
+        e = open(opcode, "r", encoding="utf-8").read()
         RllOi(
-            prompt=open(opcode, "r", encoding="utf-8").read(),
+            prompt=e,
             file=opcode
         )()
     else:
-        print(f"\"{opcode}\" not a valid option or not found file")
+        print(f"\"{opcode}\" not a valid option or not found file.")
+        print( "If you need help, try --help or --?")
         sys.exit(1)
