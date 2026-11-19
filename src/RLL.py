@@ -171,7 +171,7 @@ elif opcode == "--w":
     wwwww = tmp.manifest_path
     wwww[argv[2]] = argv[3]
     with open(wwwww, "w", encoding="utf-8") as f:
-        json.dump(wwww, f)
+        json.dump(dict(wwww), f)
 
 elif opcode == "--repl":
     from rll_types import *

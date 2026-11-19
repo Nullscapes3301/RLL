@@ -29,6 +29,22 @@ class BaseRllObj:pass
 
 class RllErrorMsg(Exception):pass
 
+class Manifest(BaseRllObj):
+    def __init__(slf, **kwargs):
+        for x in kwargs:
+            setattr(slf, x, kwargs[x])
+    def __getitem__(self, key):
+        return getattr(self, str(key))
+    def keys(self):
+        return self.__dict__.keys()
+    def __setitem__(self, key, value):
+        setattr(self, str(key), value)
+    def __iter__(self):
+        # Advertencia: no poner
+        # return iter(self)
+        # xd
+        return iter(self.__dict__.keys())
+
 class RllType(BaseRllObj):
     def __init__(self, rdata):
     
@@ -37,10 +53,13 @@ class RllType(BaseRllObj):
             list,
             dict,
             Decimal
-        ]   
+        ]
+
+        if isinstance(rdata, RllType):
+            rdata = rdata.__data__
 
         if type(rdata) not in self.__types__:
-            raise ValueError(f"Invalid data type included at a RllType, expected {str} or {list} or {int} or {dict}, {type(rdata)} founded")
+            raise ValueError(f"Invalid data type included at a RllType, expected {str} or {list} or {Decimal} or {dict}, {type(rdata)} founded")
 
         self.__data__ = rdata
 

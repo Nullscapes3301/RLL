@@ -523,6 +523,8 @@ def main(_Code):
     geval=1,
     aevalcode=r"""
 def main(_ModuleName):
+    if _vm.stdlib_path is None:
+        raise ImportError("Cannot se the stdlib")
     _vm.rll_include(_vm.stdlib_path + "\\" + str(_ModuleName))
     """),
 

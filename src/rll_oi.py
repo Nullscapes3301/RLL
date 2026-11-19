@@ -52,8 +52,18 @@ class RllOi: # RLL Official Interpreter
         self.selfdir  = os.path.dirname(self.selffile)
         self.manifest_path = os.path.join(os.path.dirname(self.selffile),"manifest.json")
 
-        with open(self.manifest_path, "r", encoding="utf-8") as f:
-            self.manifest = json.loads(f.read())
+        try:
+            with open(self.manifest_path, "r", encoding="utf-8") as f:
+                self.manifest = json.loads(f.read())
+        except (FileNotFoundError, json.JSONDecodeError):
+            print("Waring: ¡RLL is running without manifest!")
+            class temp:
+                def __getitem__(tmp, key):
+                    raise RuntimeError("Cannot read manifest")
+            self.manifest = temp()
+
+        if isinstance(self.manifest, dict):
+            self.manifest = Manifest(**self.manifest)
 
         self.locals = copy.deepcopy(commands)
         """
@@ -78,7 +88,10 @@ class RllOi: # RLL Official Interpreter
         imports son los modulos importados para evitar abrir uno dos veces
         """
 
-        self.stdlib_path = self.manifest["stdlib"].replace("´", self.selfdir)
+        try:
+            self.stdlib_path = self.manifest.stdlib.replace("´", self.selfdir)
+        except RuntimeError:
+            self.stdlib_path = rll_number(0)
         self.globals["stdlib_path"] = rll_string(self.stdlib_path)
         self.globals["__file__"] = rll_string(str(file))
 
