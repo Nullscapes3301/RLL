@@ -38,7 +38,7 @@ vars = {
     "__system__": rll_string(os.name),
     "__platform__": rll_string(platform.system()),
     "__name__": rll_string("RLL"),
-    "__version__": rll_number("1.29"),
+    "__version__": rll_number("1.30"),
     "__argv__": rll_array(a),
     "__author__": rll_string("Nullscapes"),
     "__imod__": rll_number(0),

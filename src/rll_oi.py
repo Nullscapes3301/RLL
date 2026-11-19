@@ -100,9 +100,10 @@ class RllOi: # RLL Official Interpreter
         self.parser = parser
         self.lexer = lexer
 
-        self.license = """\
+        self.license = f"""\
 MIT License
 
+Rock Like Lisp Programming Language v {self.globals["__version__"] if "__version__" in self.globals else "¿?"}
 Copyright (c) 2026 Nullscapes
 
 Repository: https://github.com/Nullscapes3301/RLL/
