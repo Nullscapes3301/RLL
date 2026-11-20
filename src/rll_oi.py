@@ -53,6 +53,8 @@ class RllOi: # RLL Official Interpreter
             self.file = os.path.abspath(file)
         else:
             self.file = file
+
+        self.ofile = copy.deepcopy(self.file) # original file
   
         self.selffile = os.path.join(os.path.abspath(__file__))
         self.selfdir  = os.path.dirname(self.selffile)
@@ -222,7 +224,7 @@ At place:
             if not _ModuleName.endswith(".rkll"):
                 _ModuleName = _ModuleName + ".rkll"
 
-        if not os.path.exists(self.stdlib_path):
+        if not os.path.exists(self.stdlib_path) and self.stdlib_path in _ModuleName:
             raise ImportError(f"This instance of RLL doesn't have a valid stdlib directory: {self.stdlib_path}")
 
         try:

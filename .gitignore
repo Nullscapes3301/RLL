@@ -1,5 +1,5 @@
 # Temporary files
-/src/test.rkll
+/tests/*
 tempCodeRunnerFile*
 *.bat
 *.exe

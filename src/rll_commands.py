@@ -556,10 +556,15 @@ def main(path):
     focus = _vm.focus
     try:
         path = os.path.join(focus, str(path))
+        _vm.file = path
+        _vm.globals["__file__"] = _vm.file
         _vm.focus = os.path.dirname(os.path.abspath(path))
         _vm.rll_include(path)
     finally:
         _vm.focus = focus
+        if _vm.globals["__imod__"] == 0: _vm.file = rll_string(_vm.ofile)
+        else: _vm.file = rll_string(_vm.focus)
+        _vm.globals["__file__"] = _vm.file 
     """),
 
 # otros
