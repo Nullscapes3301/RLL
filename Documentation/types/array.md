@@ -32,6 +32,7 @@ Para acceder a un elemento esta la opcion `getelem` que recibe un indice y una l
 ```
 
 no devolvera 20, devolvera 10.
+Un indice negativo funcionara exactamente igual que en Python.
 
 ## Modificar un array
 

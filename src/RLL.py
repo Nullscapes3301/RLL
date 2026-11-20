@@ -125,6 +125,18 @@ Options:
             sys.exit(1)
         sys.exit()
 
+    case "--w":
+        tmp = RllOi()
+        wwww = tmp.manifest
+        wwwww = tmp.manifest_path
+        try:
+            wwww[argv[2]] = argv[3]
+        except IndexError:
+            print("Not enough arguments")
+            sys.exit(1)
+        with open(wwwww, "w", encoding="utf-8") as f:
+            json.dump(dict(wwww), f)
+
     case "--t":
         tmp = RllOi()
         wwww = tmp.manifest

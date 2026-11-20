@@ -97,7 +97,7 @@ class RllType(BaseRllObj):
             if index > 0:
                 return self.__data__[int(index)-1]
             else:
-                raise IndexError("Negative index aren't admitted")
+                return self.__data__[int(index)]
 
     def _repr(self):
         if isinstance(self, rll_string):
@@ -113,7 +113,7 @@ class RllType(BaseRllObj):
             if key > 0:
                 k = int(key)-1
             else:
-                raise IndexError("Negative index aren't admitted")
+                return self.__data__[int(key)]
         self.__data__[k] = value
 
     def __delitem__(self, key):
@@ -124,7 +124,7 @@ class RllType(BaseRllObj):
             if key > 0:
                 k = int(key)-1
             else:
-                raise IndexError("Negative index aren't admitted")
+                return self.__data__[int(key)]
         del self.__data__[k]
 
     def __iter__(self):
