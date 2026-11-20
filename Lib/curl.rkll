@@ -1,0 +1,22 @@
+(import "lists")
+(import "os")
+(macro "hascurl" (¬(__ioos.os_call "where curl >nul 2>&1")))
+(if (hascurl)
+    (pass)
+    (raise "Curl is not importable when curl is not on the OS")
+)
+(func "curl" ["url"]
+{
+    (if (inside " " url)
+        (raise "Url doesn't have spaces")
+        (pass)
+    )
+    (__ioos.os_call (join " " "curl -L" url ">tmp 2>&1" ) )
+    (return (open "tmp" "r"))
+    (remove "tmp")
+})
+
+(if (¬ __imod__)
+    (print (curl "google.com") )
+    (pass)
+)

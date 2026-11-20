@@ -6,6 +6,7 @@ tempCodeRunnerFile*
 *.c
 *.asm
 *temp*
+*tmp*
 
 # Python cache
 __pycache__/

@@ -171,7 +171,7 @@ Error message:
     {err}
 
 At file:
-    {self.globals["__file__"]}
+    {self.file}
 
 At place:
     {self.actual}
@@ -243,12 +243,17 @@ At place:
         code = self.parser(l)
 
         self.globals["__imod__"] = rll_number( int( self.globals["__imod__"]) + 1 )
+        oldf = self.file
+        self.file = os.path.abspath(_ModuleName)
+        self.globals["__file__"] = rll_string(self.file)
 
         try:
             for p in code:
                 self.rll_eval(p)
         finally:
             self.globals["__imod__"] = rll_number( int(self.globals["__imod__"]) - 1 )
+            self.file = oldf
+            self.globals["__file__"] = rll_string(self.file)
 
     def rll_eval(self, code):
         """
