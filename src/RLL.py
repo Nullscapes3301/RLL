@@ -76,7 +76,9 @@ Options:
 
     case "--c":
         temp = RllOi(
-            " ".join(argv[2:])
+            prompt=" ".join(argv[2:]),
+            file="<cmd>",
+            abspath=False
         )()
         sys.exit()
         
@@ -97,7 +99,7 @@ Options:
     case "--repl":
         from rll_types import *
         import sys
-        oi = RllOi(file="<rll-repl>")
+        oi = RllOi(file="<rll-repl>",abspath=False)
         oi.globals["__argv__"] = rll_array([])
         oi.globals["__ps1__"] = rll_array(">>> ")
         if len(argv) > 1 and "-nb" in argv:
@@ -150,8 +152,8 @@ Options:
             json.dump(dict(wwww), f)
 
     case _:
-        if os.path.exists(opcode):
-            e = open(opcode, "r", encoding="utf-8").read()
+        if os.path.isfile(opcode):
+            e = open(os.path.abspath(opcode), "r", encoding="utf-8").read()
             RllOi(
                 prompt=e,
                 file=opcode

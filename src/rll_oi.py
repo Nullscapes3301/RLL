@@ -42,11 +42,17 @@ class RllOi: # RLL Official Interpreter
     def __init__(
             self,
             prompt="(pass)",
-            file=None
+            file=None,
+            abspath=True
     ):
         self.prompt = prompt
 
-        self.file = file
+        if file is None:
+            self.file = "<¿?>"
+        elif abspath:
+            self.file = os.path.abspath(file)
+        else:
+            self.file = file
   
         self.selffile = os.path.join(os.path.abspath(__file__))
         self.selfdir  = os.path.dirname(self.selffile)
@@ -99,7 +105,7 @@ class RllOi: # RLL Official Interpreter
             self.stdlib_path = None
         else:
             self.globals["stdlib_path"] = rll_string(self.stdlib_path)
-        self.globals["__file__"] = rll_string(os.path.abspath(str(file)))
+        self.globals["__file__"] = rll_string(str(self.file))
 
         self.parser = parser
         self.lexer = lexer
@@ -204,6 +210,7 @@ At place:
 
     def rll_include(self, _ModuleName):
         # stdlib_path no se usa aqui, se usa dentro del comando import
+        # que incluye archivos desde la stdlib.
         _ModuleName = str(_ModuleName)
 
         if _ModuleName in self.imports:
@@ -216,7 +223,7 @@ At place:
                 _ModuleName = _ModuleName + ".rkll"
 
         if not os.path.exists(self.stdlib_path):
-            raise ImportError("This instance of RLL doesn't have a valid stdlib directory")
+            raise ImportError(f"This instance of RLL doesn't have a valid stdlib directory: {self.stdlib_path}")
 
         try:
             with open(_ModuleName, encoding="utf-8") as file:
