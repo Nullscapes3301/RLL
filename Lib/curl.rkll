@@ -12,7 +12,13 @@
         (pass)
     )
     (__ioos.os_call (join " " "curl -L" url ">tmp 2>&1" ) )
-    (return (open "tmp" "r"))
+    (return
+        (try
+            (open "tmp" "r")
+            ""
+            (print "Something happened while opening the curl temporal data")
+        )
+    )
     (remove "tmp")
 })
 
