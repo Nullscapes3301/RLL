@@ -519,6 +519,26 @@ def main(_Code):
     _vm.__class__(prompt=rll_code)()
     """),
 
+"eval": Command(
+    geval=1,
+    aevalcode="""
+def main(_Code):
+    if not isinstance(_Code, rll_array):
+        raise TypeError("eval uses list")
+    _vm.rll_eval(list(_Code))
+    """),
+
+"evalo": Command(
+    geval=1,
+    aevalcode="""
+def main(_Code):
+    if not isinstance(_Code, rll_array):
+        raise TypeError("eval uses list")
+    _t = _vm.__class__()
+    _t.rll_eval(list(_Code))
+    """),
+
+
 "import": Command(
     geval=1,
     aevalcode=r"""

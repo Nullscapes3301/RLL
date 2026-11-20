@@ -3,6 +3,7 @@
 tempCodeRunnerFile*
 *.bat
 *.exe
+*.c
 *.asm
 *temp*
 

@@ -115,6 +115,18 @@ Hace lo mismo que `exec` pero con una diferencia importantisima. En un entorno c
 
 El `exec` funcionara y mostrara 0, pero `execo` lo ejecutara aislado y dara error porque no encontara la variable "x".
 
+## eval
+
+Recibe un array y lo ejecuta en el formato del AST, por ejemplo
+
+```rll
+(eval ["print" "Hola mundo!"])
+```
+
+## evalo
+
+Es `eval` pero en un entorno completamente aislado.
+
 ## vars
 
 Retorna un dict con todas las variables y sus respectivos valores.
