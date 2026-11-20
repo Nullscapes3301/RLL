@@ -51,7 +51,7 @@ Options:
 --?                                 Show this message
 --version                           Show RLL version
 --repl [ -nb ]                      Start the RLL repl
-        -nb                        No banner at the beginning of the REPL
+         -nb                        No banner at the beginning of the REPL
 --sm                                Show installed modules
 --n                                 Nothing
 --N                                 Nothing but exit with code 1
