@@ -57,9 +57,9 @@ Options:
 --N                                 Nothing but exit with code 1
 --license                           Show the license
 --x                                 Show RLL manifest
---c                                 Execute RLL code in terminal
---w                                 Modify a manifest key\
-    """)
+--c <command>                       Execute RLL code in terminal
+--w <key> <content>                 Modify a manifest key\
+""")
 
     case "--sm":
         try:
