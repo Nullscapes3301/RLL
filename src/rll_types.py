@@ -39,6 +39,8 @@ class Manifest(BaseRllObj):
         return self.__dict__.keys()
     def __setitem__(self, key, value):
         setattr(self, str(key), value)
+    def __delitem__(self, key):
+        del self.__dict__[key]
     def __iter__(self):
         # Advertencia: no poner
         # return iter(self)

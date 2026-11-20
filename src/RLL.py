@@ -56,8 +56,9 @@ Options:
 --n                                 Nothing
 --N                                 Nothing but exit with code 1
 --license                           Show the license
---x                                 Show RLL manifest
 --c <command>                       Execute RLL code in terminal
+--x                                 Show RLL manifest
+--t                                 Delete a key of manifest
 --w <key> <content>                 Modify a manifest key\
 """)
 
@@ -93,18 +94,6 @@ Options:
     case "--N":
         sys.exit(1)
 
-    case "--w":
-        tmp = RllOi()
-        wwww = tmp.manifest
-        wwwww = tmp.manifest_path
-        try:
-            wwww[argv[2]] = argv[3]
-        except IndexError:
-            print("Not enough arguments")
-            sys.exit(1)
-        with open(wwwww, "w", encoding="utf-8") as f:
-            json.dump(dict(wwww), f)
-
     case "--repl":
         from rll_types import *
         import sys
@@ -135,6 +124,18 @@ Options:
             print(err)
             sys.exit(1)
         sys.exit()
+
+    case "--t":
+        tmp = RllOi()
+        wwww = tmp.manifest
+        wwwww = tmp.manifest_path
+        try:
+            del wwww[argv[2]]
+        except IndexError:
+            print("Not enough arguments")
+            sys.exit(1)
+        with open(wwwww, "w", encoding="utf-8") as f:
+            json.dump(dict(wwww), f)
 
     case _:
         if os.path.exists(opcode):
