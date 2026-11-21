@@ -141,6 +141,7 @@ SOFTWARE.\
 
     def __call__(self):
         exit_code = 0
+        self.actual = "<root>"
 
         __set__(self)
 
@@ -155,6 +156,7 @@ SOFTWARE.\
             self.code = self.parser(self.l)
             for a in self.code:
                 self.rll_eval(a)
+                self.actual = "<root>"
         except KeyboardInterrupt:
             exit_code = 2
         except SystemExit as e:
@@ -163,6 +165,10 @@ SOFTWARE.\
             msg = type(err).__name__
             if isinstance(err, RllErrorMsg):
                 msg = "Raised error"
+            if self.actual != "<root>":
+                act = f"\nAt place:\n    {self.actual}"
+            else:
+                act=""
             print(f"""\
 Fatal Error:
     {msg}
@@ -172,9 +178,7 @@ Error message:
 
 At file:
     {self.file}
-
-At place:
-    {self.actual}
+{act}\
 """)        
             exit_code =  1
         finally:
@@ -275,6 +279,7 @@ At place:
             if len(args) > 0:
                 tungs = " ..."
 
+            old = self.actual
             self.actual = f"({opcode}{tungs})"
 
             # Manejar los bloques de comandos(el parser les pone como progn)
@@ -293,15 +298,20 @@ At place:
                             continue
                         elif i[0] == "break":
                             if bool(self.rll_eval(i[1])):
+                                self.actual = old
                                 return ret
                     self.rll_eval(i)
 
+                self.actual = old
                 return ret
 
             if opcode not in self.locals:
+                self.actual = old
                 raise NameError(f"rll_eval method recieved a non existent func: {opcode}")
 
-            return self.locals[opcode](*args)
+            ret = self.locals[opcode](*args)
+            self.actual = old
+            return ret
 
         elif isinstance(code, RllType):
             if isinstance(code, rll_malloc):
