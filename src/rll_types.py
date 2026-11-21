@@ -96,6 +96,8 @@ class RllType(BaseRllObj):
         else:
             if index > 0:
                 return self.__data__[int(index)-1]
+            elif index == 0:
+                raise IndexError("Invalid index: 0 (if you are trying to get the first element use 1 instead of 0)")
             else:
                 return self.__data__[int(index)]
 
@@ -112,6 +114,8 @@ class RllType(BaseRllObj):
             key = int(key)
             if key > 0:
                 k = int(key)-1
+            elif key == 0:
+                raise IndexError("Invalid index: 0 (if you are trying to get the first element use 1 instead of 0)")
             else:
                 return self.__data__[int(key)]
         self.__data__[k] = value
@@ -123,6 +127,8 @@ class RllType(BaseRllObj):
             key = int(key)
             if key > 0:
                 k = int(key)-1
+            elif key == 0:
+                raise IndexError("Invalid index: 0 (if you are trying to get the first element use 1 instead of 0)")
             else:
                 return self.__data__[int(key)]
         del self.__data__[k]

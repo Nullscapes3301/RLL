@@ -15,20 +15,18 @@
 
 (func "where" (list "_what" "_list")
 {
-    (set "ret" 1)
-    (set "r" 0)
-    (for "elem" (range (len _list) )
+    (set "ret" 0)
+
+    (for "elem" (range (len _list))
     {
-        (set "ret" elem)
-        (if (== (getelem elem _list ) _what )
+        (if (== (getelem elem _list) _what)
             {
-                (set "r" 1)
+                (set "ret" elem)
             }
             (pass)
         )
-        (return 1)
-        (break r)
     })
+
     (return ret)
 })
 
@@ -43,6 +41,22 @@
             (pass)
             (append elem ret)
         )
+    })
+    (return ret)
+})
+
+(func "reverse" ["_list"]
+{
+    (set "ret"  [])
+    (set "temp" [])
+    (for "relem" _list
+    {
+        (set "temp" [relem])
+        (for "item" ret
+        {
+            (append item temp)
+        })
+        (set "ret" temp)
     })
     (return ret)
 })

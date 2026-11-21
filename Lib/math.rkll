@@ -63,6 +63,8 @@
 
 (func "sign" (list "_n") (if (< _n 0) -1 (if (== _n 0) 0 1) ) )
 
+; ++ y -- se les debe pasar en texto el nombre de la variable no directamente la variable
+
 (func "++" ["var"] {
     (set "temp" (+ (getelem var (vars) ) 1) )
     (set var temp)

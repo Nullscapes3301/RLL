@@ -42,6 +42,7 @@ vars = {
     "__argv__": rll_array(a),
     "__author__": rll_string("Nullscapes"),
     "__imod__": rll_number(0),
+    "...": rll_number(0),
     # Se modifica en el interprete
     "stdlib_path": None,
     "__file__": None
